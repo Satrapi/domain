@@ -1,14 +1,8 @@
 package com.artronics.sdwn.domain.entities;
 
-import com.artronics.sdwn.domain.entities.node.SdwnNodeEntity;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 @Entity
 @Table(name = "switching_net")
@@ -22,7 +16,7 @@ public class SwitchingNetwork implements Serializable
 
     private SdwnControllerEntity sdwnController;
 
-    private List<SdwnNodeEntity> nodes = new ArrayList<>();
+//    private List<SdwnNodeEntity> nodes = new ArrayList<>();
 
     protected Date created;
     protected Date updated;
@@ -71,7 +65,7 @@ public class SwitchingNetwork implements Serializable
         this.description = description;
     }
 
-    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name = "controller_id", nullable = false)
     public SdwnControllerEntity getSdwnController()
     {
@@ -84,18 +78,17 @@ public class SwitchingNetwork implements Serializable
         this.sdwnController = sdwnController;
     }
 
-
-    @Fetch(FetchMode.SUBSELECT)
-    @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-    public List<SdwnNodeEntity> getNodes()
-    {
-        return nodes;
-    }
-
-    public void setNodes(List<SdwnNodeEntity> nodes)
-    {
-        this.nodes = nodes;
-    }
+//    @Fetch(FetchMode.SUBSELECT)
+//    @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+//    public List<SdwnNodeEntity> getNodes()
+//    {
+//        return nodes;
+//    }
+//
+//    public void setNodes(List<SdwnNodeEntity> nodes)
+//    {
+//        this.nodes = nodes;
+//    }
 
     public Date getCreated()
     {

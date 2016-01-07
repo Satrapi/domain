@@ -22,8 +22,8 @@ public class SwitchingNetRepoTest extends BaseRepoTest
         super.setUp();
 
         SdwnControllerEntity ctrl = EntityFactory.createController("foo/url");
-        net.setSdwnController(ctrl);
-        ctrl.addSwitchingNet(net);
+//        net.setSdwnController(ctrl);
+//        ctrl.addSwitchingNet(net);
 
         controllerRepo.save(ctrl);
     }

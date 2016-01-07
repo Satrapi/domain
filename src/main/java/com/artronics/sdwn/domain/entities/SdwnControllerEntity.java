@@ -1,8 +1,5 @@
 package com.artronics.sdwn.domain.entities;
 
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -82,8 +79,8 @@ public class SdwnControllerEntity implements Serializable
         this.url = url;
     }
 
-    @Fetch(FetchMode.SUBSELECT)
-    @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL,
+    mappedBy = "sdwnController")
     public List<SwitchingNetwork> getSwitchingNetworks()
     {
         return switchingNetworks;
