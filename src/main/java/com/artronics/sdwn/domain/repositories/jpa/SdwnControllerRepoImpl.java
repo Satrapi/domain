@@ -5,6 +5,7 @@ import com.artronics.sdwn.domain.entities.SwitchingNetwork;
 import com.artronics.sdwn.domain.repositories.SdwnControllerCustomRepo;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Repository;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -39,13 +40,14 @@ public class SdwnControllerRepoImpl implements SdwnControllerCustomRepo
     public SwitchingNetwork addSwitchingNet(SdwnControllerEntity ctrl,
                                             SwitchingNetwork switchingNetwork)
     {
-        SdwnControllerEntity con = em.find(SdwnControllerEntity.class,ctrl.getId());
-        con.addSwitchingNet(switchingNetwork);
-
-        switchingNetwork.setSdwnController(con);
-
-        em.persist(con);
-
-        return switchingNetwork;
+        throw new NotImplementedException();
+//        SdwnControllerEntity con = em.find(SdwnControllerEntity.class,ctrl.getId());
+////        con.addSwitchingNet(switchingNetwork);
+//
+//        switchingNetwork.setSdwnController(con);
+//
+//        em.persist(con);
+//
+//        return switchingNetwork;
     }
 }

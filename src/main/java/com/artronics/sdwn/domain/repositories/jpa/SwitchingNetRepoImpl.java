@@ -1,8 +1,11 @@
 package com.artronics.sdwn.domain.repositories.jpa;
 
+import com.artronics.sdwn.domain.entities.SdwnControllerEntity;
 import com.artronics.sdwn.domain.entities.SwitchingNetwork;
+import com.artronics.sdwn.domain.repositories.SdwnControllerRepo;
 import com.artronics.sdwn.domain.repositories.SwitchingNetCustomRepo;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -17,6 +20,9 @@ public class SwitchingNetRepoImpl implements SwitchingNetCustomRepo
 
     @PersistenceContext
     private EntityManager em;
+
+    @Autowired
+    private SdwnControllerRepo controllerRepo;
 
     @Override
     public SwitchingNetwork findByUrl(String url)
@@ -33,5 +39,16 @@ public class SwitchingNetRepoImpl implements SwitchingNetCustomRepo
         }
 
         return singleResult;
+    }
+
+    @Override
+    public SwitchingNetwork create(SwitchingNetwork network, Long controllerId)
+    {
+        SdwnControllerEntity ctrl = controllerRepo.findOne(controllerId);
+
+        network.setSdwnController(ctrl);
+        em.persist(network);
+
+        return network;
     }
 }

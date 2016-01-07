@@ -2,9 +2,7 @@ package com.artronics.sdwn.domain.entities;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 @Entity
 @Table(name="controllers")
@@ -18,7 +16,7 @@ public class SdwnControllerEntity implements Serializable
 
     private String description;
 
-    private List<SwitchingNetwork> switchingNetworks = new ArrayList<>();
+//    private List<SwitchingNetwork> switchingNetworks = new ArrayList<>();
 
     protected Date created;
     protected Date updated;
@@ -79,18 +77,18 @@ public class SdwnControllerEntity implements Serializable
         this.url = url;
     }
 
-    @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL,
-    mappedBy = "sdwnController")
-    public List<SwitchingNetwork> getSwitchingNetworks()
-    {
-        return switchingNetworks;
-    }
-
-    public void setSwitchingNetworks(
-            List<SwitchingNetwork> switchingNetworks)
-    {
-        this.switchingNetworks = switchingNetworks;
-    }
+//    @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL,
+//    mappedBy = "sdwnController")
+//    public List<SwitchingNetwork> getSwitchingNetworks()
+//    {
+//        return switchingNetworks;
+//    }
+//
+//    public void setSwitchingNetworks(
+//            List<SwitchingNetwork> switchingNetworks)
+//    {
+//        this.switchingNetworks = switchingNetworks;
+//    }
 
     @PrePersist
     protected void onCreate()
@@ -124,9 +122,9 @@ public class SdwnControllerEntity implements Serializable
         this.updated = updated;
     }
 
-    public void addSwitchingNet(SwitchingNetwork net){
-        switchingNetworks.add(net);
-    }
+//    public void addSwitchingNet(SwitchingNetwork net){
+//        switchingNetworks.add(net);
+//    }
 
     public enum Status{
         ACTIVE
