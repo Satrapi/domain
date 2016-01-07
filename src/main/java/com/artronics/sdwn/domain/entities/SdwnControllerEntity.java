@@ -4,13 +4,14 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Entity
 @Table(name="controllers")
-public class SdwnControllerEntity
+public class SdwnControllerEntity implements Serializable
 {
     private Long id;
 

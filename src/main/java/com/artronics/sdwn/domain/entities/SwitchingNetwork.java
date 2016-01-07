@@ -5,13 +5,14 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Entity
 @Table(name = "switching_net")
-public class SwitchingNetwork
+public class SwitchingNetwork implements Serializable
 {
     private  Long id;
 
@@ -126,5 +127,11 @@ public class SwitchingNetwork
     protected void onUpdate()
     {
         updated = new Date();
+    }
+
+    @Override
+    public String toString()
+    {
+        return "Switching Network: id: " + getId()+ " url: " + getUrl();
     }
 }
