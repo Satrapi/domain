@@ -13,6 +13,7 @@ import static org.junit.Assert.assertThat;
 public class SwitchingNetRepoTest extends BaseRepoTest
 {
     private SwitchingNetwork net = EntityFactory.createSwitchingNet(URL);
+    private SdwnControllerEntity controller = EntityFactory.createController("someUrl");
 
     @Override
     @Before
@@ -22,10 +23,21 @@ public class SwitchingNetRepoTest extends BaseRepoTest
         super.setUp();
 
         SdwnControllerEntity ctrl = EntityFactory.createController("foo/url");
-//        net.setSdwnController(ctrl);
+        net.setSdwnController(ctrl);
 //        ctrl.addSwitchingNet(net);
 
         controllerRepo.save(ctrl);
+    }
+
+    @Test
+    @Transactional
+    public void it_should_be_pers_with_controller(){
+        SdwnControllerEntity ctrl = EntityFactory.createController("someFoo");
+        ctrl=controllerRepo.save(ctrl);
+
+        SwitchingNetwork net = EntityFactory.createSwitchingNet("someOtherFoo");
+        net.setSdwnController(ctrl);
+        switchingNetRepo.save(net);
     }
 
     @Test
@@ -35,4 +47,13 @@ public class SwitchingNetRepoTest extends BaseRepoTest
         assertThat(persistedNet.getId(),equalTo(net.getId()));
     }
 
+    @Test
+    @Transactional
+    public void save_a_device(){
+        SwitchingNetwork net = EntityFactory.createSwitchingNet("foo");
+        controllerRepo.save(controller);
+        net.setSdwnController(controller);
+
+        switchingNetRepo.save(net);
+    }
 }

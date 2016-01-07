@@ -1,6 +1,7 @@
 package com.artronics.sdwn.domain.repositories.jpa;
 
 import com.artronics.sdwn.domain.entities.SdwnControllerEntity;
+import com.artronics.sdwn.domain.entities.SwitchingNetwork;
 import com.artronics.sdwn.domain.repositories.SdwnControllerCustomRepo;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Repository;
@@ -32,5 +33,19 @@ public class SdwnControllerRepoImpl implements SdwnControllerCustomRepo
         }
 
         return singleResult;
+    }
+
+    @Override
+    public SwitchingNetwork addSwitchingNet(SdwnControllerEntity ctrl,
+                                            SwitchingNetwork switchingNetwork)
+    {
+        SdwnControllerEntity con = em.find(SdwnControllerEntity.class,ctrl.getId());
+        con.addSwitchingNet(switchingNetwork);
+
+        switchingNetwork.setSdwnController(con);
+
+        em.persist(con);
+
+        return switchingNetwork;
     }
 }
