@@ -126,6 +126,10 @@ public class SdwnControllerEntity
         this.updated = updated;
     }
 
+    public void addSwitchingNet(SwitchingNetwork net){
+        switchingNetworks.add(net);
+    }
+
     public enum Status{
         ACTIVE
     }

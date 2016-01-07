@@ -1,5 +1,7 @@
 package com.artronics.sdwn.domain.repositories;
 
+import com.artronics.sdwn.domain.entities.SdwnControllerEntity;
+import com.artronics.sdwn.domain.helpers.EntityFactory;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -24,6 +26,9 @@ public class BaseRepoTest
     @Autowired
     protected SdwnControllerRepo controllerRepo;
 
+    @Autowired
+    protected SwitchingNetRepo switchingNetRepo;
+
     @Before
     @Transactional
     public void setUp() throws Exception
@@ -43,5 +48,8 @@ public class BaseRepoTest
         controllerRepo.deleteAll();
     }
 
+    public SdwnControllerEntity persistCtrl(String url){
+        return controllerRepo.save(EntityFactory.createController(url));
+    }
 
 }

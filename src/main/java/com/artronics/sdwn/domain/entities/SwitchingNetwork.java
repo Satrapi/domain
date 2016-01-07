@@ -1,9 +1,11 @@
 package com.artronics.sdwn.domain.entities;
 
+import com.artronics.sdwn.domain.entities.node.SdwnNodeEntity;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -18,6 +20,8 @@ public class SwitchingNetwork
     private String description;
 
     private SdwnControllerEntity sdwnController;
+
+    private List<SdwnNodeEntity> nodes = new ArrayList<>();
 
     protected Date created;
     protected Date updated;
@@ -77,6 +81,19 @@ public class SwitchingNetwork
             SdwnControllerEntity sdwnController)
     {
         this.sdwnController = sdwnController;
+    }
+
+
+    @Fetch(FetchMode.SUBSELECT)
+    @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    public List<SdwnNodeEntity> getNodes()
+    {
+        return nodes;
+    }
+
+    public void setNodes(List<SdwnNodeEntity> nodes)
+    {
+        this.nodes = nodes;
     }
 
     public Date getCreated()
