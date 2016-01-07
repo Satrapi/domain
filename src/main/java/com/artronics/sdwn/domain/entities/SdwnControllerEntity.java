@@ -16,6 +16,8 @@ public class SdwnControllerEntity
 
     private String url;
 
+    private Status status;
+
     private String description;
 
     private List<SwitchingNetwork> switchingNetworks = new ArrayList<>();
@@ -34,6 +36,18 @@ public class SdwnControllerEntity
     public void setId(Long id)
     {
         this.id = id;
+    }
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status",nullable = false)
+    public Status getStatus()
+    {
+        return status;
+    }
+
+    public void setStatus(Status status)
+    {
+        this.status = status;
     }
 
     @Column(name = "description")
@@ -101,5 +115,9 @@ public class SdwnControllerEntity
     public void setUpdated(Date updated)
     {
         this.updated = updated;
+    }
+
+    public enum Status{
+        ACTIVE
     }
 }
