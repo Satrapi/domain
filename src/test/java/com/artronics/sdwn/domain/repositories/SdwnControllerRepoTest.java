@@ -4,6 +4,7 @@ import com.artronics.sdwn.domain.entities.SdwnControllerEntity;
 import com.artronics.sdwn.domain.entities.SwitchingNetwork;
 import com.artronics.sdwn.domain.helpers.EntityFactory;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -43,5 +44,23 @@ public class SdwnControllerRepoTest extends BaseRepoTest
         assertThat(con.getSwitchingNetworks().size(),equalTo(1));
     }
 
+    @Ignore("Both previous and new controller keeps net!")
+    @Test
+    @Transactional
+    public void it_should_update_SwitchingNetwork_if_exists(){
+        //first create a ctrl and assign a switchingNet
+        SwitchingNetwork net = EntityFactory.createSwitchingNet("someUrl");
+        controllerRepo.addSwitchingNet(controller,net);
 
+        //create another ctrl
+        SdwnControllerEntity anotherCtrl = EntityFactory.createController("newUrl");
+        controllerRepo.save(anotherCtrl);
+        controllerRepo.addSwitchingNet(anotherCtrl,net);
+
+        SdwnControllerEntity newCtrl = switchingNetRepo.findByUrl(net.getUrl()).getSdwnController();
+
+        assertThat(newCtrl.getUrl(),equalTo("newUrl"));
+        SdwnControllerEntity prevCtrl = controllerRepo.findOne(controller.getId());
+        assertThat(prevCtrl.getSwitchingNetworks().size(),equalTo(0));
+    }
 }
