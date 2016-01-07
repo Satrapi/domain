@@ -125,6 +125,8 @@ public class SwitchingNetwork implements Serializable
     @Override
     public String toString()
     {
-        return "Switching Network: id: " + getId()+ " url: " + getUrl();
+        return "Switching Network: id: " + getId()+ " url: " + getUrl()
+                +" associated controller id: "+ getSdwnController().getId()
+                + " with url: " + getSdwnController().getUrl();
     }
 }
