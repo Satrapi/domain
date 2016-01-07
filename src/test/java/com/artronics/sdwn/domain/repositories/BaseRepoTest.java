@@ -1,6 +1,5 @@
 package com.artronics.sdwn.domain.repositories;
 
-import org.apache.log4j.Logger;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,9 +10,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
-
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {
@@ -21,12 +17,12 @@ import java.util.List;
 //        SatrapiApplication.class
 })
 @ActiveProfiles("test")
-public class RepoBaseTes
+public class BaseRepoTest
 {
-    private final static Logger log = Logger.getLogger(RepoBaseTes.class);
+    protected final static String URL = "http://foo.com:8080";
 
     @Autowired
-    private SdwnControllerRepo controllerRepo;
+    protected SdwnControllerRepo controllerRepo;
 
     @Before
     @Transactional

@@ -16,7 +16,7 @@ public class SdwnControllerEntity
 
     private String url;
 
-    private Status status;
+    private Status status = Status.ACTIVE;
 
     private String description;
 
@@ -24,6 +24,15 @@ public class SdwnControllerEntity
 
     protected Date created;
     protected Date updated;
+
+    public SdwnControllerEntity()
+    {
+    }
+
+    public SdwnControllerEntity(String url)
+    {
+        this.url = url;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
