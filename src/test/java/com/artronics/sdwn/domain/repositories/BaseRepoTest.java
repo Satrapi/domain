@@ -27,7 +27,7 @@ public class BaseRepoTest
     protected SdwnControllerRepo controllerRepo;
 
     @Autowired
-    protected SwitchingNetRepo switchingNetRepo;
+    protected DeviceConnectionRepo deviceConnectionRepo;
 
     @Before
     @Transactional

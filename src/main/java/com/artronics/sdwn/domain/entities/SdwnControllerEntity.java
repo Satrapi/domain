@@ -16,8 +16,6 @@ public class SdwnControllerEntity implements Serializable
 
     private String description;
 
-//    private List<SwitchingNetwork> switchingNetworks = new ArrayList<>();
-
     protected Date created;
     protected Date updated;
 
@@ -77,19 +75,6 @@ public class SdwnControllerEntity implements Serializable
         this.url = url;
     }
 
-//    @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL,
-//    mappedBy = "sdwnController")
-//    public List<SwitchingNetwork> getSwitchingNetworks()
-//    {
-//        return switchingNetworks;
-//    }
-//
-//    public void setSwitchingNetworks(
-//            List<SwitchingNetwork> switchingNetworks)
-//    {
-//        this.switchingNetworks = switchingNetworks;
-//    }
-
     @PrePersist
     protected void onCreate()
     {
@@ -121,10 +106,6 @@ public class SdwnControllerEntity implements Serializable
     {
         this.updated = updated;
     }
-
-//    public void addSwitchingNet(SwitchingNetwork net){
-//        switchingNetworks.add(net);
-//    }
 
     public enum Status{
         ACTIVE

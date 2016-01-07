@@ -1,9 +1,9 @@
 package com.artronics.sdwn.domain.repositories.jpa;
 
+import com.artronics.sdwn.domain.entities.DeviceConnectionEntity;
 import com.artronics.sdwn.domain.entities.SdwnControllerEntity;
-import com.artronics.sdwn.domain.entities.SwitchingNetwork;
+import com.artronics.sdwn.domain.repositories.DeviceConnectionCustomRepo;
 import com.artronics.sdwn.domain.repositories.SdwnControllerRepo;
-import com.artronics.sdwn.domain.repositories.SwitchingNetCustomRepo;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -14,9 +14,9 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 @Repository
-public class SwitchingNetRepoImpl implements SwitchingNetCustomRepo
+public class DeviceConnectionRepoImpl implements DeviceConnectionCustomRepo
 {
-    private final static Logger log = Logger.getLogger(SwitchingNetRepoImpl.class);
+    private final static Logger log = Logger.getLogger(DeviceConnectionRepoImpl.class);
 
     @PersistenceContext
     private EntityManager em;
@@ -25,15 +25,15 @@ public class SwitchingNetRepoImpl implements SwitchingNetCustomRepo
     private SdwnControllerRepo controllerRepo;
 
     @Override
-    public SwitchingNetwork findByUrl(String url)
+    public DeviceConnectionEntity findByUrl(String url)
     {
-        Query q = em.createQuery("FROM com.artronics.sdwn.domain.entities.SwitchingNetwork n where " +
-                                         "n.url=?1");
+        Query q = em.createQuery("FROM com.artronics.sdwn.domain.entities.DeviceConnectionEntity n where " + "n.url=?1");
+
         q.setParameter(1,url);
 
-        SwitchingNetwork singleResult = null;
+        DeviceConnectionEntity singleResult = null;
         try {
-            singleResult = (SwitchingNetwork) q.getSingleResult();
+            singleResult = (DeviceConnectionEntity) q.getSingleResult();
         }catch (NoResultException e) {
             singleResult = null;
         }
@@ -42,13 +42,13 @@ public class SwitchingNetRepoImpl implements SwitchingNetCustomRepo
     }
 
     @Override
-    public SwitchingNetwork create(SwitchingNetwork network, Long controllerId)
+    public DeviceConnectionEntity create(DeviceConnectionEntity device, Long controllerId)
     {
         SdwnControllerEntity ctrl = controllerRepo.findOne(controllerId);
 
-        network.setSdwnController(ctrl);
-        em.persist(network);
+        device.setSdwnController(ctrl);
+        em.persist(device);
 
-        return network;
+        return device;
     }
 }

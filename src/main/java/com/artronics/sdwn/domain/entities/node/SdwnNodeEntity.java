@@ -1,6 +1,6 @@
 package com.artronics.sdwn.domain.entities.node;
 
-import com.artronics.sdwn.domain.entities.SwitchingNetwork;
+import com.artronics.sdwn.domain.entities.DeviceConnectionEntity;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -9,7 +9,7 @@ import java.util.Date;
 @Table(name = "nodes")
 public class SdwnNodeEntity extends AbstractNode
 {
-    private SwitchingNetwork device;
+    private DeviceConnectionEntity device;
 
     //Normal as default value
     private Type type = Type.NORMAL;
@@ -30,12 +30,12 @@ public class SdwnNodeEntity extends AbstractNode
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "switching_id", nullable = false)
-    public SwitchingNetwork getDevice()
+    public DeviceConnectionEntity getDevice()
     {
         return device;
     }
 
-    public void setDevice(SwitchingNetwork device)
+    public void setDevice(DeviceConnectionEntity device)
     {
         this.device = device;
     }

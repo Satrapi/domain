@@ -1,7 +1,7 @@
 package com.artronics.sdwn.domain.repositories.jpa;
 
+import com.artronics.sdwn.domain.entities.DeviceConnectionEntity;
 import com.artronics.sdwn.domain.entities.SdwnControllerEntity;
-import com.artronics.sdwn.domain.entities.SwitchingNetwork;
 import com.artronics.sdwn.domain.repositories.SdwnControllerCustomRepo;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Repository;
@@ -37,17 +37,17 @@ public class SdwnControllerRepoImpl implements SdwnControllerCustomRepo
     }
 
     @Override
-    public SwitchingNetwork addSwitchingNet(SdwnControllerEntity ctrl,
-                                            SwitchingNetwork switchingNetwork)
+    public DeviceConnectionEntity addSwitchingNet(SdwnControllerEntity ctrl,
+                                                  DeviceConnectionEntity deviceConnectionEntity)
     {
         throw new NotImplementedException();
 //        SdwnControllerEntity con = em.find(SdwnControllerEntity.class,ctrl.getId());
-////        con.addSwitchingNet(switchingNetwork);
+////        con.addSwitchingNet(deviceConnectionEntity);
 //
-//        switchingNetwork.setSdwnController(con);
+//        deviceConnectionEntity.setSdwnController(con);
 //
 //        em.persist(con);
 //
-//        return switchingNetwork;
+//        return deviceConnectionEntity;
     }
 }

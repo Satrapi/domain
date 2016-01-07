@@ -1,7 +1,7 @@
 package com.artronics.sdwn.domain.repositories;
 
+import com.artronics.sdwn.domain.entities.DeviceConnectionEntity;
 import com.artronics.sdwn.domain.entities.SdwnControllerEntity;
-import com.artronics.sdwn.domain.entities.SwitchingNetwork;
 import com.artronics.sdwn.domain.helpers.EntityFactory;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -34,7 +34,7 @@ public class SdwnControllerRepoTest extends BaseRepoTest
     @Test
     @Transactional
     public void it_should_add_a_SwitchinNetwork(){
-        SwitchingNetwork net = EntityFactory.createSwitchingNet("someUrl");
+        DeviceConnectionEntity net = EntityFactory.createSwitchingNet("someUrl");
         controllerRepo.addSwitchingNet(controller,net);
 
         assertNotNull(net.getId());
@@ -49,7 +49,7 @@ public class SdwnControllerRepoTest extends BaseRepoTest
     @Transactional
     public void it_should_update_SwitchingNetwork_if_exists(){
         //first create a ctrl and assign a switchingNet
-        SwitchingNetwork net = EntityFactory.createSwitchingNet("someUrl");
+        DeviceConnectionEntity net = EntityFactory.createSwitchingNet("someUrl");
         controllerRepo.addSwitchingNet(controller,net);
 
         //create another ctrl
@@ -57,7 +57,7 @@ public class SdwnControllerRepoTest extends BaseRepoTest
         controllerRepo.save(anotherCtrl);
         controllerRepo.addSwitchingNet(anotherCtrl,net);
 
-        SdwnControllerEntity newCtrl = switchingNetRepo.findByUrl(net.getUrl()).getSdwnController();
+        SdwnControllerEntity newCtrl = deviceConnectionRepo.findByUrl(net.getUrl()).getSdwnController();
 
         assertThat(newCtrl.getUrl(),equalTo("newUrl"));
         SdwnControllerEntity prevCtrl = controllerRepo.findOne(controller.getId());

@@ -1,7 +1,7 @@
 package com.artronics.sdwn.domain.repositories;
 
+import com.artronics.sdwn.domain.entities.DeviceConnectionEntity;
 import com.artronics.sdwn.domain.entities.SdwnControllerEntity;
-import com.artronics.sdwn.domain.entities.SwitchingNetwork;
 import com.artronics.sdwn.domain.helpers.EntityFactory;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,9 +11,9 @@ import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 
-public class SwitchingNetRepoTest extends BaseRepoTest
+public class DeviceConnetionRepo extends BaseRepoTest
 {
-    private SwitchingNetwork net = EntityFactory.createSwitchingNet(URL);
+    private DeviceConnectionEntity net = EntityFactory.createSwitchingNet(URL);
     private SdwnControllerEntity controller = EntityFactory.createController("someUrl");
 
     @Override
@@ -36,14 +36,14 @@ public class SwitchingNetRepoTest extends BaseRepoTest
         SdwnControllerEntity ctrl = EntityFactory.createController("someFoo");
         ctrl=controllerRepo.save(ctrl);
 
-        SwitchingNetwork net = EntityFactory.createSwitchingNet("someOtherFoo");
+        DeviceConnectionEntity net = EntityFactory.createSwitchingNet("someOtherFoo");
         net.setSdwnController(ctrl);
-        switchingNetRepo.save(net);
+        deviceConnectionRepo.save(net);
     }
 
     @Test
     public void test_findByUrl(){
-        SwitchingNetwork persistedNet = switchingNetRepo.findByUrl(URL);
+        DeviceConnectionEntity persistedNet = deviceConnectionRepo.findByUrl(URL);
 
         assertThat(persistedNet.getId(),equalTo(net.getId()));
     }
@@ -51,11 +51,11 @@ public class SwitchingNetRepoTest extends BaseRepoTest
     @Test
     @Transactional
     public void save_a_device(){
-        SwitchingNetwork net = EntityFactory.createSwitchingNet("foo");
+        DeviceConnectionEntity net = EntityFactory.createSwitchingNet("foo");
         controllerRepo.save(controller);
         net.setSdwnController(controller);
 
-        switchingNetRepo.create(net,controller.getId());
+        deviceConnectionRepo.create(net, controller.getId());
         assertNotNull(net.getId());
     }
 
@@ -63,14 +63,14 @@ public class SwitchingNetRepoTest extends BaseRepoTest
     public void it_should_update_net_if_it_is_already_persisted(){
         SdwnControllerEntity ctrl = EntityFactory.createController("someFooU");
         persistCtrl(ctrl);
-        SwitchingNetwork net=persistNet(ctrl,"urlForNet");
+        DeviceConnectionEntity net=persistNet(ctrl, "urlForNet");
 
         SdwnControllerEntity newCtrl = EntityFactory.createController("newUrl");
         persistCtrl(newCtrl);
 
-        switchingNetRepo.create(net,newCtrl.getId());
+        deviceConnectionRepo.create(net, newCtrl.getId());
 
-        SwitchingNetwork updatedNet = switchingNetRepo.findByUrl("urlForNet");
+        DeviceConnectionEntity updatedNet = deviceConnectionRepo.findByUrl("urlForNet");
 
         assertThat(updatedNet.getSdwnController().getUrl(),equalTo("newUrl"));
     }
@@ -81,8 +81,8 @@ public class SwitchingNetRepoTest extends BaseRepoTest
         return ctrl;
     }
 
-    protected SwitchingNetwork persistNet(SdwnControllerEntity ctrl,String netUrl){
-        SwitchingNetwork net=switchingNetRepo.create(EntityFactory.createSwitchingNet(netUrl),ctrl.getId());
+    protected DeviceConnectionEntity persistNet(SdwnControllerEntity ctrl, String netUrl){
+        DeviceConnectionEntity net= deviceConnectionRepo.create(EntityFactory.createSwitchingNet(netUrl), ctrl.getId());
 
         return net;
     }

@@ -1,7 +1,7 @@
 package com.artronics.sdwn.domain.helpers;
 
+import com.artronics.sdwn.domain.entities.DeviceConnectionEntity;
 import com.artronics.sdwn.domain.entities.SdwnControllerEntity;
-import com.artronics.sdwn.domain.entities.SwitchingNetwork;
 import org.apache.log4j.Logger;
 
 public class EntityFactory
@@ -14,8 +14,8 @@ public class EntityFactory
         return ctrl;
     }
 
-    public static SwitchingNetwork createSwitchingNet(String url){
-        SwitchingNetwork net = new SwitchingNetwork(url);
+    public static DeviceConnectionEntity createSwitchingNet(String url){
+        DeviceConnectionEntity net = new DeviceConnectionEntity(url);
 
         return net;
     }

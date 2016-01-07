@@ -5,8 +5,8 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-@Table(name = "switching_net")
-public class SwitchingNetwork implements Serializable
+@Table(name = "devices")
+public class DeviceConnectionEntity implements Serializable
 {
     private  Long id;
 
@@ -21,11 +21,11 @@ public class SwitchingNetwork implements Serializable
     protected Date created;
     protected Date updated;
 
-    public SwitchingNetwork()
+    public DeviceConnectionEntity()
     {
     }
 
-    public SwitchingNetwork(String url)
+    public DeviceConnectionEntity(String url)
     {
         this.url = url;
     }
