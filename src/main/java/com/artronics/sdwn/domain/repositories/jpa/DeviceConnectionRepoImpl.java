@@ -7,6 +7,7 @@ import com.artronics.sdwn.domain.repositories.SdwnControllerRepo;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -42,6 +43,7 @@ public class DeviceConnectionRepoImpl implements DeviceConnectionCustomRepo
     }
 
     @Override
+    @Transactional
     public DeviceConnectionEntity create(DeviceConnectionEntity device, Long controllerId)
     {
         SdwnControllerEntity ctrl = controllerRepo.findOne(controllerId);
