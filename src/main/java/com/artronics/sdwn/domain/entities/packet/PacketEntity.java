@@ -6,7 +6,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "packets")
-public class PacketEntity implements Packet,Serializable
+public class PacketEntity implements Packet, Serializable
 {
     private Long id;
 
@@ -30,7 +30,8 @@ public class PacketEntity implements Packet,Serializable
     {
     }
 
-    public static PacketEntity create(List<Integer> content){
+    public static PacketEntity create(List<Integer> content)
+    {
         PacketEntity packet = new PacketEntity();
 
         packet.content = content;
@@ -54,7 +55,7 @@ public class PacketEntity implements Packet,Serializable
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id",nullable = false,unique = true)
+    @Column(name = "id", nullable = false, unique = true)
     public Long getId()
     {
         return id;
