@@ -7,8 +7,12 @@ import java.util.Date;
 
 @Entity
 @Table(name = "nodes")
-public class SdwnNodeEntity extends AbstractNode
+public class SdwnNodeEntity implements Node
 {
+    protected Long id;
+
+    protected Long address;
+
     private DeviceConnectionEntity device;
 
     //Normal as default value
@@ -27,6 +31,38 @@ public class SdwnNodeEntity extends AbstractNode
     {
         this.address = address;
     }
+
+    public SdwnNodeEntity(Long address, DeviceConnectionEntity device)
+    {
+        this.address = address;
+        this.device = device;
+    }
+
+    @Override
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id",nullable = false,unique = true)
+    public Long getId()
+    {
+        return id;
+    }
+
+    public void setId(Long id)
+    {
+        this.id = id;
+    }
+
+    @Column(name = "address",nullable = false,unique = false)
+    public Long getAddress()
+    {
+        return address;
+    }
+
+    public void setAddress(Long address)
+    {
+        this.address = address;
+    }
+
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "device_id", nullable = false)
@@ -124,15 +160,17 @@ public class SdwnNodeEntity extends AbstractNode
     {
         //use getters for getting fields(for ORM) see this SO answer:
         //http://stackoverflow.com/questions/27581/what-issues-should-be-considered-when-overriding-equals-and-hashcode-in-java
-        Long devId = getDeviceId();
-        Long add = getAddress();
+        Long nodeId = getId();
+
+        if (nodeId == null) {
+            throw new NullPointerException("Node id is null. Make sure node is persisted or fetch from database");
+        }
 
         int result =17;
 
-        int addr = (int) (add ^ (add >>> 32));
-        int devIdi =devId==null ? 0: (int) (devId ^ (devId >>> 32));
+        int nodeIdInt = (int) (nodeId ^ (nodeId >>> 32));
 
-        result+=addr+devIdi;
+        result+=nodeIdInt;
 
         return 31*result;
     }
@@ -146,8 +184,14 @@ public class SdwnNodeEntity extends AbstractNode
             return true;
 
         SdwnNodeEntity rhs = (SdwnNodeEntity) obj;
-        return this.getAddress().equals(rhs.getAddress()) &&
-                this.getDeviceId().equals(rhs.getDeviceId());
 
+        return this.getId().equals(rhs.getId());
     }
+
+    @Override
+    public String toString()
+    {
+        return "Node: "+address.toString();
+    }
+
 }
