@@ -50,12 +50,12 @@ public class FakePacketFactory
         return PacketEntity.create(createRawReportPacket());
     }
 
-    public Packet createReportPacket(int src, int dst, int dis, int bat, List<Integer> neighbors)
+    public PacketEntity createReportPacket(int src, int dst, int dis, int bat, List<Integer> neighbors)
     {
         return PacketEntity.create(createRawReportPacket(src, dst, dis, bat, neighbors));
     }
 
-    public Packet createReportPacket(int src, int dst, List<Integer> neighbors)
+    public PacketEntity createReportPacket(int src, int dst, List<Integer> neighbors)
     {
         return createReportPacket(src, dst, 1, 255, neighbors);
     }

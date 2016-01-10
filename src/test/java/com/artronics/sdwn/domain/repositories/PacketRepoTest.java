@@ -1,7 +1,6 @@
 package com.artronics.sdwn.domain.repositories;
 
 import com.artronics.sdwn.domain.entities.packet.PacketEntity;
-import com.artronics.sdwn.domain.helpers.FakePacketFactory;
 import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;
 
