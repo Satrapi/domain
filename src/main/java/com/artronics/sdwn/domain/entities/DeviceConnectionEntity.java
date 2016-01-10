@@ -12,6 +12,8 @@ public class DeviceConnectionEntity implements Serializable
 
     private String url;
 
+    private Long sinkAddress;
+
     private String description;
 
     private SdwnControllerEntity sdwnController;
@@ -52,6 +54,17 @@ public class DeviceConnectionEntity implements Serializable
     public void setUrl(String url)
     {
         this.url = url;
+    }
+
+    @Column(name = "sink_add",nullable = false,unique = false)
+    public Long getSinkAddress()
+    {
+        return sinkAddress;
+    }
+
+    public void setSinkAddress(Long sinkAddress)
+    {
+        this.sinkAddress = sinkAddress;
     }
 
     @Column(name = "description")
