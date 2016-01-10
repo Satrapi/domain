@@ -10,8 +10,8 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 @Configuration
 @Import(PersistenceConfig.class)
 @PropertySource({
-//        "classpath:application-test.properties",
-        "classpath:application-test.properties"
+        "classpath:application-dev.properties",
+//        "classpath:application-test.properties"
 })
 public class RepositoryConfigTest
 {

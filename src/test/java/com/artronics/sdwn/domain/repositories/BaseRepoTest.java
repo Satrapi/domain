@@ -39,6 +39,9 @@ public class BaseRepoTest
     @Autowired
     protected NodeRepo nodeRepo;
 
+    @Autowired
+    protected PacketRepo packetRepo;
+
     @Before
     @Transactional
     public void setUp() throws Exception
