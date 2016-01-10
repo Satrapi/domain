@@ -32,6 +32,12 @@ public class DeviceConnectionEntity implements Serializable
         this.url = url;
     }
 
+    public DeviceConnectionEntity(String url, Long sinkAddress)
+    {
+        this.url = url;
+        this.sinkAddress = sinkAddress;
+    }
+
     public DeviceConnectionEntity(Long id, String url, Long sinkAddress)
     {
         this.id = id;
