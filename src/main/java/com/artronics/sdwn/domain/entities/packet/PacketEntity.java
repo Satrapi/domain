@@ -1,5 +1,7 @@
 package com.artronics.sdwn.domain.entities.packet;
 
+import com.artronics.sdwn.domain.entities.DeviceConnectionEntity;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
@@ -9,6 +11,8 @@ import java.util.List;
 public class PacketEntity implements Packet, Serializable
 {
     private Long id;
+
+    private DeviceConnectionEntity device;
 
     private List<Integer> content;
 
@@ -64,6 +68,18 @@ public class PacketEntity implements Packet, Serializable
     public void setId(Long id)
     {
         this.id = id;
+    }
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "device_id", nullable = false)
+    public DeviceConnectionEntity getDevice()
+    {
+        return device;
+    }
+
+    public void setDevice(DeviceConnectionEntity device)
+    {
+        this.device = device;
     }
 
     @ElementCollection(fetch = FetchType.EAGER)
