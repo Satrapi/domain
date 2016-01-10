@@ -1,6 +1,7 @@
 package com.artronics.sdwn.domain.entities.node;
 
 import com.artronics.sdwn.domain.entities.packet.PacketEntity;
+import com.artronics.sdwn.domain.helpers.FakePacketFactory;
 import org.junit.Before;
 import org.junit.Test;
 

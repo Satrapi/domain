@@ -160,17 +160,12 @@ public class SdwnNodeEntity implements Node
     {
         //use getters for getting fields(for ORM) see this SO answer:
         //http://stackoverflow.com/questions/27581/what-issues-should-be-considered-when-overriding-equals-and-hashcode-in-java
-        Long nodeId = getId();
-
-        if (nodeId == null) {
-            throw new NullPointerException("Node id is null. Make sure node is persisted or fetch from database");
-        }
-
         int result =17;
+        Long add_l = getAddress();
 
-        int nodeIdInt = (int) (nodeId ^ (nodeId >>> 32));
+        int add = (int) (add_l ^ (add_l >>>32));
 
-        result+=nodeIdInt;
+        result+=add;
 
         return 31*result;
     }
@@ -185,7 +180,7 @@ public class SdwnNodeEntity implements Node
 
         SdwnNodeEntity rhs = (SdwnNodeEntity) obj;
 
-        return this.getId().equals(rhs.getId());
+        return this.getAddress().equals(rhs.getAddress());
     }
 
     @Override

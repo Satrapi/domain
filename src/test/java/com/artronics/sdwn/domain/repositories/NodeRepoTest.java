@@ -27,4 +27,14 @@ public class NodeRepoTest extends BaseRepoTest
 
         assertNotNull(node.getId());
     }
+
+    @Test
+    @Transactional
+    public void test_create(){
+        SdwnNodeEntity node = new SdwnNodeEntity(34L);
+
+        nodeRepo.create(node,device.getId());
+
+        assertNotNull(node.getId());
+    }
 }
