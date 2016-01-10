@@ -4,7 +4,7 @@ package com.artronics.sdwn.domain.entities.node;
 import javax.persistence.*;
 
 @MappedSuperclass
-public abstract class AbstractNode
+public abstract class AbstractNode implements Node
 {
     protected Long id;
     protected Long address;
@@ -22,6 +22,7 @@ public abstract class AbstractNode
         this.deviceId = deviceId;
     }
 
+    @Override
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id",nullable = false,unique = true)
