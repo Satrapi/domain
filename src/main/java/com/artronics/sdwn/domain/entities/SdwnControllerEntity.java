@@ -111,6 +111,7 @@ public class SdwnControllerEntity implements Serializable
     }
 
     public enum Status{
-        ACTIVE
+        ACTIVE,
+        SHUTDOWN
     }
 }
