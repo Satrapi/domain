@@ -9,7 +9,8 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 
 @Configuration
 @Import(PersistenceConfig.class)
-@PropertySource("classpath:application-test.properties")
+//@PropertySource("classpath:application-test.properties")
+@PropertySource("classpath:application-dev.properties")
 public class PersistenceConfigTest
 {
     private final static Logger log = Logger.getLogger(PersistenceConfigTest.class);
