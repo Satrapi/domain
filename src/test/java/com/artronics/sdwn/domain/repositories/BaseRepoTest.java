@@ -1,5 +1,6 @@
 package com.artronics.sdwn.domain.repositories;
 
+import com.artronics.sdwn.domain.entities.DeviceConnectionEntity;
 import com.artronics.sdwn.domain.entities.SdwnControllerEntity;
 import com.artronics.sdwn.domain.helpers.EntityFactory;
 import org.junit.After;
@@ -22,6 +23,12 @@ import org.springframework.transaction.annotation.Transactional;
 public class BaseRepoTest
 {
     protected final static String URL = "http://foo.com:8080";
+    protected final static String DEVICE_URL = "http://device.com:7840";
+    protected final static Long SINK_ADD = 10L;
+
+
+    protected SdwnControllerEntity controller;
+    protected DeviceConnectionEntity device;
 
     @Autowired
     protected SdwnControllerRepo controllerRepo;
@@ -29,10 +36,20 @@ public class BaseRepoTest
     @Autowired
     protected DeviceConnectionRepo deviceConnectionRepo;
 
+    @Autowired
+    protected NodeRepo nodeRepo;
+
     @Before
     @Transactional
     public void setUp() throws Exception
     {
+        controller = new SdwnControllerEntity(URL);
+        device = new DeviceConnectionEntity(DEVICE_URL);
+        device.setSdwnController(controller);
+        device.setSinkAddress(SINK_ADD);
+
+//        controllerRepo.save(controller);
+        deviceConnectionRepo.save(device);
     }
 
     //    @Ignore("This is a test in RepoBaseTest which should be run for debugging base class")
@@ -45,7 +62,7 @@ public class BaseRepoTest
     @After
     public void after() throws Exception
     {
-//        controllerRepo.deleteAll();
+        controllerRepo.deleteAll();
     }
 
     public SdwnControllerEntity persistCtrl(String url){

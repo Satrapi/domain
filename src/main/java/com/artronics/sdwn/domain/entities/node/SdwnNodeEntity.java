@@ -29,7 +29,7 @@ public class SdwnNodeEntity extends AbstractNode
     }
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "switching_id", nullable = false)
+    @JoinColumn(name = "device_id", nullable = false)
     public DeviceConnectionEntity getDevice()
     {
         return device;
