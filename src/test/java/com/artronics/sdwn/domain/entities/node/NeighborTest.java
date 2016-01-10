@@ -41,15 +41,15 @@ public class NeighborTest
     @Test
     public void test_up_casting_to_node()
     {
-        SdwnNode node = neighbors.get(0);
-        SdwnNode sameNode = new SdwnNode(35L);
+        SdwnNodeEntity node = neighbors.get(0);
+        SdwnNodeEntity sameNode = new SdwnNodeEntity(35L);
 
         assertEquals(sameNode, node);
     }
 
     @Test
     public void it_should_be_equal_to_a_Node_just_if_addresses_are_the_same(){
-        SdwnNode node = new SdwnNode(1L);
+        SdwnNodeEntity node = new SdwnNodeEntity(1L);
         Neighbor neighbor = new Neighbor(1L,23);
 
         assertThat(node,equalTo(neighbor));
@@ -60,7 +60,7 @@ public class NeighborTest
         //we add a node and a neighbor with same address
         //HashSet must be contains one of them as soon as
         //generic type is Node
-        SdwnNode node0= new SdwnNode(0L);
+        SdwnNodeEntity node0= new SdwnNodeEntity(0L);
         Neighbor neighbor0 = new Neighbor(0L,32);
         Set<Node> set = new HashSet<>();
         set.add(node0);

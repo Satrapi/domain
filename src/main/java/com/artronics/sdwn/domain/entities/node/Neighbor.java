@@ -6,7 +6,7 @@ import com.artronics.sdwn.domain.entities.packet.SdwnPacketHelper;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Neighbor extends SdwnNode
+public class Neighbor extends SdwnNodeEntity
 {
     public final static int NEIGHBOR_INDEX=13;
 
