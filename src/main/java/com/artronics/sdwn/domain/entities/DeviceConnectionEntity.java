@@ -32,6 +32,13 @@ public class DeviceConnectionEntity implements Serializable
         this.url = url;
     }
 
+    public DeviceConnectionEntity(Long id, String url, Long sinkAddress)
+    {
+        this.id = id;
+        this.url = url;
+        this.sinkAddress = sinkAddress;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id",nullable = false,unique = true)
