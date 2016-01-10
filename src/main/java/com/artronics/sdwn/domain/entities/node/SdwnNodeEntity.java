@@ -13,12 +13,12 @@ public class SdwnNodeEntity implements Node
 
     protected Long address;
 
-    private DeviceConnectionEntity device;
+    protected DeviceConnectionEntity device;
 
     //Normal as default value
-    private Type type = Type.NORMAL;
-    private Status status = Status.ACTIVE;
-    private int battery;
+    protected Type type = Type.NORMAL;
+    protected Status status = Status.ACTIVE;
+    protected int battery;
 
     protected Date created;
     protected Date updated;
@@ -161,11 +161,19 @@ public class SdwnNodeEntity implements Node
         //use getters for getting fields(for ORM) see this SO answer:
         //http://stackoverflow.com/questions/27581/what-issues-should-be-considered-when-overriding-equals-and-hashcode-in-java
         int result =17;
+
+        Long id_l = getDevice().getId();
+
+        if (id_l == null) {
+            throw new NullPointerException("Make sure device is attached to Node");
+        }
+
         Long add_l = getAddress();
 
         int add = (int) (add_l ^ (add_l >>>32));
+        int id = (int) (id_l ^ (id_l>>>32));
 
-        result+=add;
+        result+=add+id;
 
         return 31*result;
     }
@@ -180,7 +188,8 @@ public class SdwnNodeEntity implements Node
 
         SdwnNodeEntity rhs = (SdwnNodeEntity) obj;
 
-        return this.getAddress().equals(rhs.getAddress());
+        return this.getAddress().equals(rhs.getAddress())&&
+                this.getDevice().getId().equals(rhs.getDevice().getId());
     }
 
     @Override

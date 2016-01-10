@@ -1,6 +1,6 @@
 package com.artronics.sdwn.domain.entities.node;
 
-import com.artronics.sdwn.domain.entities.packet.Packet;
+import com.artronics.sdwn.domain.entities.packet.PacketEntity;
 import com.artronics.sdwn.domain.entities.packet.SdwnPacketHelper;
 
 import java.util.ArrayList;
@@ -18,7 +18,7 @@ public class Neighbor extends SdwnNodeEntity
         this.rssi = rssi;
     }
 
-    public static List<Neighbor> createNeighbors(Packet packet)
+    public static List<Neighbor> createNeighbors(PacketEntity packet)
     {
         List<Neighbor> neighbors = new ArrayList<>();
         List<Integer> contents = packet.getContent();
@@ -28,6 +28,7 @@ public class Neighbor extends SdwnNodeEntity
                                                      contents.get(i + 1));
             int rssi = contents.get(i + 2);
             Neighbor neighbor = new Neighbor(Integer.toUnsignedLong(add), rssi);
+            neighbor.setDevice(packet.getDevice());
             neighbors.add(neighbor);
         }
 
