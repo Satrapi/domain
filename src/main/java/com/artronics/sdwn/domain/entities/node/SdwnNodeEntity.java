@@ -1,6 +1,7 @@
 package com.artronics.sdwn.domain.entities.node;
 
 import com.artronics.sdwn.domain.entities.DeviceConnectionEntity;
+import com.artronics.sdwn.domain.entities.NetworkSession;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -15,6 +16,8 @@ public class SdwnNodeEntity implements Node
     protected Long id;
 
     protected Long address;
+
+    protected NetworkSession session;
 
     protected DeviceConnectionEntity device;
 
@@ -68,6 +71,17 @@ public class SdwnNodeEntity implements Node
         this.address = address;
     }
 
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "session_id", nullable = false)
+    public NetworkSession getSession()
+    {
+        return session;
+    }
+
+    public void setSession(NetworkSession session)
+    {
+        this.session = session;
+    }
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "device_id", nullable = false)

@@ -1,6 +1,7 @@
 package com.artronics.sdwn.domain.repositories.jpa;
 
 import com.artronics.sdwn.domain.entities.DeviceConnectionEntity;
+import com.artronics.sdwn.domain.entities.NetworkSession;
 import com.artronics.sdwn.domain.entities.node.Neighbor;
 import com.artronics.sdwn.domain.entities.node.SdwnNodeEntity;
 import com.artronics.sdwn.domain.repositories.DeviceConnectionRepo;
@@ -25,6 +26,9 @@ public class NodeRepoImpl implements NodeCustomRepo
     @Autowired
     private DeviceConnectionRepo deviceRepo;
 
+    @Autowired
+    private NetworkSession session;
+
     @Override
     @Transactional
     public SdwnNodeEntity create(SdwnNodeEntity node, Long deviceId)
@@ -32,6 +36,7 @@ public class NodeRepoImpl implements NodeCustomRepo
         DeviceConnectionEntity device = deviceRepo.findOne(deviceId);
 
         node.setDevice(device);
+        node.setSession(session);
 
         em.persist(node);
 
