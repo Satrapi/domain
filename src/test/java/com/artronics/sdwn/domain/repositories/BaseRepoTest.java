@@ -45,6 +45,9 @@ public class BaseRepoTest
     @Autowired
     protected PacketRepo packetRepo;
 
+    @Autowired
+    protected SessionRepo sessionRepo;
+
     @Before
     @Transactional
     public void setUp() throws Exception

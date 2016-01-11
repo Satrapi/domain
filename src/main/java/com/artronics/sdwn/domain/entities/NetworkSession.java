@@ -8,7 +8,7 @@ public class NetworkSession
 {
     private Long id;
 
-    private Status status;
+    private Status status=Status.ACTIVE;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
