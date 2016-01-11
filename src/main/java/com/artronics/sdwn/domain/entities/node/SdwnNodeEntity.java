@@ -4,9 +4,11 @@ import com.artronics.sdwn.domain.entities.DeviceConnectionEntity;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Table(name = "nodes")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class SdwnNodeEntity implements Node
 {
     protected Long id;
@@ -14,6 +16,8 @@ public class SdwnNodeEntity implements Node
     protected Long address;
 
     protected DeviceConnectionEntity device;
+
+    private Set<Neighbor> neighbors;
 
     //Normal as default value
     protected Type type = Type.NORMAL;
@@ -74,6 +78,20 @@ public class SdwnNodeEntity implements Node
     public void setDevice(DeviceConnectionEntity device)
     {
         this.device = device;
+    }
+
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "node_neighbor",joinColumns = {@JoinColumn(name = "node_id")},
+            inverseJoinColumns = {@JoinColumn(name = "neighbor_id")})
+    public Set<Neighbor> getNeighbors()
+    {
+        return neighbors;
+    }
+
+    public void setNeighbors(Set<Neighbor> neighbors)
+    {
+        this.neighbors = neighbors;
     }
 
     @Enumerated(EnumType.STRING)

@@ -3,14 +3,21 @@ package com.artronics.sdwn.domain.entities.node;
 import com.artronics.sdwn.domain.entities.packet.PacketEntity;
 import com.artronics.sdwn.domain.entities.packet.SdwnPacketHelper;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
+@Table(name = "neighbors")
 public class Neighbor extends SdwnNodeEntity
 {
     public final static int NEIGHBOR_INDEX=13;
 
-    private final int rssi;
+    private Integer rssi;
+
+    private SdwnNodeEntity parentNode;
 
     public Neighbor(Long address, int rssi)
     {
@@ -45,8 +52,16 @@ public class Neighbor extends SdwnNodeEntity
 
         return s;
     }
+
+    @Column(name = "rssi",nullable = false,unique = false)
     public int getRssi()
     {
         return rssi;
     }
+
+    public void setRssi(Integer rssi)
+    {
+        this.rssi = rssi;
+    }
+
 }
