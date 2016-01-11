@@ -4,6 +4,7 @@ import com.artronics.sdwn.domain.entities.DeviceConnectionEntity;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -17,7 +18,7 @@ public class SdwnNodeEntity implements Node
 
     protected DeviceConnectionEntity device;
 
-    private Set<Neighbor> neighbors;
+    private Set<Neighbor> neighbors = new HashSet<>();
 
     //Normal as default value
     protected Type type = Type.NORMAL;
@@ -68,7 +69,7 @@ public class SdwnNodeEntity implements Node
     }
 
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "device_id", nullable = false)
     public DeviceConnectionEntity getDevice()
     {
@@ -79,7 +80,6 @@ public class SdwnNodeEntity implements Node
     {
         this.device = device;
     }
-
 
     @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinTable(name = "node_neighbor",joinColumns = {@JoinColumn(name = "node_id")},

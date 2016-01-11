@@ -19,9 +19,11 @@ public class Neighbor extends SdwnNodeEntity
 
     private Integer rssi;
 
-    private SdwnNodeEntity parentNode;
+    public Neighbor()
+    {
+    }
 
-    public Neighbor(Long address, int rssi,DeviceConnectionEntity device)
+    public Neighbor(Long address, int rssi, DeviceConnectionEntity device)
     {
         super(address);
         this.rssi = rssi;
@@ -52,10 +54,10 @@ public class Neighbor extends SdwnNodeEntity
     @Override
     public String toString()
     {
-        String s="Neighbor: ";
+        String s="Neighbor-> ";
 
-        s+=getId()==null ? "": "id: " +getId();
-        s+="add: " +getAddress();
+        s+=getId()==null ? "ID: null": "ID: " +getId();
+        s+=" ADD: " +getAddress();
 
         return s;
     }

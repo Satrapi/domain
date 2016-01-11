@@ -151,11 +151,9 @@ public class DeviceConnectionEntity implements Serializable
     @Override
     public String toString()
     {
-        String s = "Switching Network: id: "+ getId()+ " url: " + getUrl();
-        if (getSdwnController() == null) {
-            return s;
-        }
-        return s+=" associated controller id: "+ getSdwnController().getId()
-                + " with url: " + getSdwnController().getUrl();
+        String s = "DeviceConnection-> URL: "+ getUrl();
+        s+=getId()==null? "": " ID: " +getId();
+
+        return s;
     }
 }
