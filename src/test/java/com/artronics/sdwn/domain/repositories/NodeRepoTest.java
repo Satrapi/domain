@@ -7,6 +7,7 @@ import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 import static org.junit.Assert.assertNotNull;
@@ -53,6 +54,13 @@ public class NodeRepoTest extends BaseRepoTest
 
         nodeRepo.persistNeighbors(node,neighbors);
 
+        neighbors = neighborRepo.fetchNeighbors(node);
+
+        Iterator<Neighbor> it = neighbors.iterator();
+        while (it.hasNext()){
+            Neighbor n =it.next();
+            assertNotNull(n.getId());
+        }
     }
     private SdwnNodeEntity persistNode(SdwnNodeEntity node){
         nodeRepo.create(node,device.getId());

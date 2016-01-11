@@ -81,7 +81,7 @@ public class SdwnNodeEntity implements Node
     }
 
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinTable(name = "node_neighbor",joinColumns = {@JoinColumn(name = "node_id")},
             inverseJoinColumns = {@JoinColumn(name = "neighbor_id")})
     public Set<Neighbor> getNeighbors()
