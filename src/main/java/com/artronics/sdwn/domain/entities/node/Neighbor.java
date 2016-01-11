@@ -1,13 +1,15 @@
 package com.artronics.sdwn.domain.entities.node;
 
+import com.artronics.sdwn.domain.entities.DeviceConnectionEntity;
 import com.artronics.sdwn.domain.entities.packet.PacketEntity;
 import com.artronics.sdwn.domain.entities.packet.SdwnPacketHelper;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "neighbors")
@@ -25,9 +27,14 @@ public class Neighbor extends SdwnNodeEntity
         this.rssi = rssi;
     }
 
-    public static List<Neighbor> createNeighbors(PacketEntity packet)
+    public Neighbor(Long address, DeviceConnectionEntity device)
     {
-        List<Neighbor> neighbors = new ArrayList<>();
+        super(address, device);
+    }
+
+    public static Set<Neighbor> createNeighbors(PacketEntity packet)
+    {
+        Set<Neighbor> neighbors = new HashSet<>();
         List<Integer> contents = packet.getContent();
 
         for (int i = NEIGHBOR_INDEX; i < contents.size(); i += 3) {
