@@ -1,6 +1,7 @@
 package com.artronics.sdwn.domain.repositories;
 
 import com.artronics.sdwn.domain.entities.DeviceConnectionEntity;
+import com.artronics.sdwn.domain.entities.NetworkSession;
 import com.artronics.sdwn.domain.entities.SdwnControllerEntity;
 import com.artronics.sdwn.domain.helpers.EntityFactory;
 import org.junit.After;
@@ -29,6 +30,7 @@ public class BaseRepoTest
 
     protected SdwnControllerEntity controller;
     protected DeviceConnectionEntity device;
+    protected NetworkSession session;
 
     @Autowired
     protected SdwnControllerRepo controllerRepo;
@@ -59,6 +61,9 @@ public class BaseRepoTest
 
 //        controllerRepo.save(controller);
         deviceConnectionRepo.save(device);
+
+        session = new NetworkSession();
+        sessionRepo.save(session);
     }
 
     //    @Ignore("This is a test in RepoBaseTest which should be run for debugging base class")
