@@ -65,7 +65,7 @@ public class BaseRepoTest
     @After
     public void after() throws Exception
     {
-        controllerRepo.deleteAll();
+//        controllerRepo.deleteAll();
     }
 
     public SdwnControllerEntity persistCtrl(String url){

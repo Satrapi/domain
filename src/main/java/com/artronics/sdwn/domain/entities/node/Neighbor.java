@@ -21,10 +21,11 @@ public class Neighbor extends SdwnNodeEntity
 
     private SdwnNodeEntity parentNode;
 
-    public Neighbor(Long address, int rssi)
+    public Neighbor(Long address, int rssi,DeviceConnectionEntity device)
     {
         super(address);
         this.rssi = rssi;
+        setDevice(device);
     }
 
     public Neighbor(Long address, DeviceConnectionEntity device)
@@ -41,8 +42,7 @@ public class Neighbor extends SdwnNodeEntity
             int add = SdwnPacketHelper.joinAddresses(contents.get(i),
                                                      contents.get(i + 1));
             int rssi = contents.get(i + 2);
-            Neighbor neighbor = new Neighbor(Integer.toUnsignedLong(add), rssi);
-            neighbor.setDevice(packet.getDevice());
+            Neighbor neighbor = new Neighbor(Integer.toUnsignedLong(add), rssi,packet.getDevice());
             neighbors.add(neighbor);
         }
 

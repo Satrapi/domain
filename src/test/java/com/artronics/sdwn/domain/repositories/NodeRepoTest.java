@@ -1,9 +1,13 @@
 package com.artronics.sdwn.domain.repositories;
 
+import com.artronics.sdwn.domain.entities.node.Neighbor;
 import com.artronics.sdwn.domain.entities.node.SdwnNodeEntity;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.HashSet;
+import java.util.Set;
 
 import static org.junit.Assert.assertNotNull;
 
@@ -36,5 +40,23 @@ public class NodeRepoTest extends BaseRepoTest
         nodeRepo.create(node,device.getId());
 
         assertNotNull(node.getId());
+    }
+
+    @Test
+    public void test_persistNeighbors(){
+        SdwnNodeEntity node = persistNode(new SdwnNodeEntity(10L));
+        Neighbor n0 = new Neighbor(20L,123,device);
+        Neighbor n1 = new Neighbor(21L,212,device);
+        Set<Neighbor> neighbors = new HashSet<>();
+        neighbors.add(n0);
+        neighbors.add(n1);
+
+        nodeRepo.persistNeighbors(node,neighbors);
+
+    }
+    private SdwnNodeEntity persistNode(SdwnNodeEntity node){
+        nodeRepo.create(node,device.getId());
+
+        return node;
     }
 }
