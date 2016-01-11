@@ -175,6 +175,13 @@ public class SdwnNodeEntity implements Node
         updated = new Date();
     }
 
+    public void addNeighbor(Neighbor neighbor){
+        if (this.neighbors.contains(neighbor)){
+            this.neighbors.remove(neighbor);
+        }
+        this.neighbors.add(neighbor);
+    }
+
     public enum Type
     {
         SINK,
@@ -197,7 +204,7 @@ public class SdwnNodeEntity implements Node
         Long id_l = getDevice().getId();
 
         if (id_l == null) {
-            throw new NullPointerException("Make sure device is attached to Node");
+            throw new NullPointerException("Make sure Node or Neighbor is persisted");
         }
 
         Long add_l = getAddress();
