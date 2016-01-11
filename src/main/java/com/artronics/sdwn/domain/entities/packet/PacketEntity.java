@@ -1,6 +1,7 @@
 package com.artronics.sdwn.domain.entities.packet;
 
 import com.artronics.sdwn.domain.entities.DeviceConnectionEntity;
+import com.artronics.sdwn.domain.entities.NetworkSession;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -13,6 +14,8 @@ public class PacketEntity implements Packet, Serializable
     private Long id;
 
     private DeviceConnectionEntity device;
+
+    private NetworkSession session;
 
     private List<Integer> content;
 
@@ -80,6 +83,18 @@ public class PacketEntity implements Packet, Serializable
     public void setDevice(DeviceConnectionEntity device)
     {
         this.device = device;
+    }
+
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @JoinColumn(name = "session_id",nullable = false)
+    public NetworkSession getSession()
+    {
+        return session;
+    }
+
+    public void setSession(NetworkSession session)
+    {
+        this.session = session;
     }
 
     @ElementCollection(fetch = FetchType.EAGER)
