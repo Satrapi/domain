@@ -34,4 +34,20 @@ public class NeighborRepoImpl implements NeighborCustomRepo
 
         return n.getNeighbors();
     }
+
+    @Override
+    public SdwnNodeEntity persistNeighborSet(SdwnNodeEntity srcNode, Set<Neighbor> neighbors)
+    {
+        Query q = em.createQuery("FROM com.artronics.sdwn.domain.entities.node.SdwnNodeEntity n where " +
+                                         "n.id = ?1 AND n.status = 'ACTIVE'");
+
+        q.setParameter(1,srcNode.getId());
+        SdwnNodeEntity n =(SdwnNodeEntity) q.getSingleResult();
+
+        n.setNeighbors(neighbors);
+
+        em.persist(n);
+
+        return n;
+    }
 }

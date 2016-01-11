@@ -8,4 +8,6 @@ import java.util.Set;
 public interface NeighborCustomRepo
 {
     Set<Neighbor> fetchNeighbors(SdwnNodeEntity node);
+
+    SdwnNodeEntity persistNeighborSet(SdwnNodeEntity srcNode, Set<Neighbor> neighbors);
 }
