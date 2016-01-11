@@ -47,41 +47,42 @@ public class NeighborTest
         assertTrue(neighbors.contains(new Neighbor(36L,device)));
         assertTrue(neighbors.contains(new Neighbor(37L,device)));
     }
-
+    
     @Test
-    public void test_up_casting_to_node()
-    {
-        SdwnNodeEntity node = neighbors.get(0);
-        SdwnNodeEntity sameNode = new SdwnNodeEntity(37L,device);
+    public void test_equals(){
+        Neighbor n0 = new Neighbor(20L,30,device);
+        assertTrue(n0.equals(n0));
 
-        assertEquals(sameNode, node);
+        Neighbor sameN0 = new Neighbor(20L,30,device);
+        assertTrue(n0.equals(sameN0));
+        assertTrue(sameN0.equals(n0));
+
+        Neighbor n1 = new Neighbor(20L,50,device);
+        assertTrue(n0.equals(n1));
+        assertFalse(n0.equals(new Neighbor(21L,30,device)));
+        assertFalse(n0.equals(new Neighbor(20L,30,new DeviceConnectionEntity(31L,"foo",43L))));
     }
 
     @Test
-    public void it_should_be_equal_to_a_Node_just_if_addresses_are_the_same(){
-        SdwnNodeEntity node = new SdwnNodeEntity(1L,device);
-        Neighbor neighbor = new Neighbor(1L,device);
-        neighbor.setRssi(22);
+    public void test_hashCode(){
+        //if two are equals hashcode must be equal to
+        Neighbor n0 = new Neighbor(20L,30,device);
+        Neighbor sameN0 = new Neighbor(20L,30,device);
 
-        assertThat(node,equalTo(neighbor));
+        assertThat(n0.hashCode(),equalTo(sameN0.hashCode()));
+
+        Neighbor n1 = new Neighbor(20L,50,device);
+        assertThat(n0.hashCode(),equalTo(n1.hashCode()));
     }
 
     @Test
-    public void it_should_work_in_HashSet_contains_methods(){
-        //we add a node and a neighbor with same address
-        //HashSet must be contains one of them as soon as
-        //generic type is Node
-        SdwnNodeEntity node0= new SdwnNodeEntity(0L,device);
-        Neighbor neighbor0 = new Neighbor(0L,device);
-        neighbor0.setRssi(32);
+    public void contains_method_in_set_should_check_for_nodeId_and_deviceId(){
+        Neighbor n0 = new Neighbor(20L,30,device);
+        Neighbor n1 = new Neighbor(20L,50,device);
+        Set<Neighbor> n = new HashSet<>();
+        n.add(n1);
 
-        Set<Node> set = new HashSet<>();
-        set.add(node0);
-        set.add(neighbor0);
-
-        assertThat(set.size(),equalTo(1));
-        assertTrue(set.contains(neighbor0));
-        assertTrue(set.contains(node0));
+        assertTrue(n.contains(n0));
     }
 
 }

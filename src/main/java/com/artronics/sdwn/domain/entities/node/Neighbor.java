@@ -77,26 +77,31 @@ public class Neighbor extends SdwnNodeEntity
 //    public int hashCode()
 //    {
 //        int result = super.hashCode();
+//        final int prime = 31;
 //        //use getters for getting fields(for ORM) see this SO answer:
 //        //http://stackoverflow.com/questions/27581/what-issues-should-be-considered-when-overriding-equals-and-hashcode-in-java
 //
-//        result+=rssi;
+//        result = prime * result + getRssi();
 //
-//        return 31*result;
+//        return result;
 //    }
 
-    @Override
-    public boolean equals(Object obj)
-    {
-        if (!(obj instanceof Neighbor))
-            return false;
-        if (obj == this)
-            return true;
-
-        Neighbor rhs = (Neighbor) obj;
-
-        return this.getAddress().equals(rhs.getAddress())&&
-                this.getDevice().getId().equals(rhs.getDevice().getId())&&
-                this.getRssi().equals(rhs.getRssi());
-    }
+//    @Override
+//    public boolean equals(Object obj)
+//    {
+//        if (!(obj instanceof Neighbor))
+//            return false;
+//        if (obj == this)
+//            return true;
+//        if(obj == null)
+//            return false;
+//        if (getClass() != obj.getClass())
+//            return false;
+//
+//        Neighbor rhs = (Neighbor) obj;
+//
+//        return this.getAddress().equals(rhs.getAddress())&&
+//                this.getDevice().getId().equals(rhs.getDevice().getId())&&
+//                this.getRssi().equals(rhs.getRssi());
+//    }
 }

@@ -31,6 +31,8 @@ public class NodeAndNeighborTest extends BaseRepoTest
         Neighbor ne = createNeighbor(21L,233);
         node.addNeighbor(ne);
 
+        neighborRepo.save(ne);
+
         nodeRepo.save(node);
         Set<Neighbor> neighbors = node.getNeighbors();
         assertThat(neighbors.size(),equalTo(1));
