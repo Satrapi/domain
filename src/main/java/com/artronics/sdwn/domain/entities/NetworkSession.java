@@ -24,6 +24,7 @@ public class NetworkSession
     }
 
     @Column(name = "status",nullable = false,unique = false)
+    @Enumerated(EnumType.STRING)
     public Status getStatus()
     {
         return status;

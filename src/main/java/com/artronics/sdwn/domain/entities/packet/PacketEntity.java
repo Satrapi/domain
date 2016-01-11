@@ -73,7 +73,7 @@ public class PacketEntity implements Packet, Serializable
         this.id = id;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinColumn(name = "device_id", nullable = false)
     public DeviceConnectionEntity getDevice()
     {
@@ -85,7 +85,7 @@ public class PacketEntity implements Packet, Serializable
         this.device = device;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.MERGE)
     @JoinColumn(name = "session_id",nullable = false)
     public NetworkSession getSession()
     {

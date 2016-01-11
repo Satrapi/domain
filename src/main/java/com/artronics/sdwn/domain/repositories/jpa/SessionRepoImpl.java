@@ -6,6 +6,7 @@ import com.artronics.sdwn.domain.repositories.SessionCustomRepo;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -22,6 +23,7 @@ public class SessionRepoImpl implements SessionCustomRepo
     private SdwnControllerRepo controllerRepo;
 
     @Override
+    @Transactional
     public void expire()
     {
         Query q = em.createQuery("from com.artronics.sdwn.domain.entities.NetworkSession s  where " +

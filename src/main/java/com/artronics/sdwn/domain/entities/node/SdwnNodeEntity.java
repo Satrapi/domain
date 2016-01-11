@@ -71,7 +71,7 @@ public class SdwnNodeEntity implements Node
         this.address = address;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinColumn(name = "session_id", nullable = false)
     public NetworkSession getSession()
     {
@@ -83,7 +83,7 @@ public class SdwnNodeEntity implements Node
         this.session = session;
     }
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinColumn(name = "device_id", nullable = false)
     public DeviceConnectionEntity getDevice()
     {
