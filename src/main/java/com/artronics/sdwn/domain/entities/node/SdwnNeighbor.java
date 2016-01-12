@@ -1,42 +1,25 @@
 package com.artronics.sdwn.domain.entities.node;
 
-import com.artronics.sdwn.domain.entities.DeviceConnectionEntity;
 import com.artronics.sdwn.domain.entities.packet.PacketEntity;
 import com.artronics.sdwn.domain.entities.packet.SdwnPacketHelper;
 
-import javax.persistence.Column;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class SdwnNeighbor extends SdwnNodeEntity
+public class SdwnNeighbor implements Neighbor<SdwnNodeEntity>
 {
     public final static int NEIGHBOR_INDEX=13;
 
+    private SdwnNodeEntity node;
     private Integer rssi;
 
     private Double weight;
 
-    public SdwnNeighbor()
+    public SdwnNeighbor(SdwnNodeEntity node, Integer rssi)
     {
-    }
-
-    public SdwnNeighbor(Long address, Double weight, DeviceConnectionEntity device)
-    {
-        super(address);
-        this.weight = weight;
-        setDevice(device);
-    }
-
-    public SdwnNeighbor(Long address, Integer rssi, DeviceConnectionEntity device)
-    {
-        super(address, device);
+        this.node = node;
         this.rssi = rssi;
-    }
-
-    public SdwnNeighbor(Long address, DeviceConnectionEntity device)
-    {
-        super(address, device);
     }
 
     public static Set<SdwnNeighbor> createNeighbors(PacketEntity packet)
@@ -48,7 +31,8 @@ public class SdwnNeighbor extends SdwnNodeEntity
             int add = SdwnPacketHelper.joinAddresses(contents.get(i),
                                                      contents.get(i + 1));
             int rssi = contents.get(i + 2);
-            SdwnNeighbor neighbor = new SdwnNeighbor(Integer.toUnsignedLong(add), rssi, packet.getDevice());
+            SdwnNodeEntity node = new SdwnNodeEntity(Integer.toUnsignedLong(add));
+            SdwnNeighbor neighbor = new SdwnNeighbor(node,rssi);
             neighbors.add(neighbor);
         }
 
@@ -56,17 +40,17 @@ public class SdwnNeighbor extends SdwnNodeEntity
     }
 
     @Override
-    public String toString()
+    public SdwnNodeEntity getNode()
     {
-        String s="Neighbor-> ";
-
-        s+=getId()==null ? "ID: null": "ID: " +getId();
-        s+=" ADD: " +getAddress();
-
-        return s;
+        return node;
     }
 
-    @Column(name = "weight",nullable = false,unique = false)
+    public void setNode(SdwnNodeEntity node)
+    {
+        this.node = node;
+    }
+
+    @Override
     public Double getWeight()
     {
         return weight;
