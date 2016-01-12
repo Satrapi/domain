@@ -2,7 +2,7 @@ package com.artronics.sdwn.domain.repositories.jpa;
 
 import com.artronics.sdwn.domain.entities.DeviceConnectionEntity;
 import com.artronics.sdwn.domain.entities.NetworkSession;
-import com.artronics.sdwn.domain.entities.node.Neighbor;
+import com.artronics.sdwn.domain.entities.node.SdwnNeighbor;
 import com.artronics.sdwn.domain.entities.node.SdwnNodeEntity;
 import com.artronics.sdwn.domain.repositories.DeviceConnectionRepo;
 import com.artronics.sdwn.domain.repositories.NodeCustomRepo;
@@ -47,7 +47,7 @@ public class NodeRepoImpl implements NodeCustomRepo
     }
 
     @Override
-    public Set<Neighbor> persistNeighbors(SdwnNodeEntity node,Set<Neighbor> neighbors)
+    public Set<SdwnNeighbor> persistNeighbors(SdwnNodeEntity node, Set<SdwnNeighbor> neighbors)
     {
         SdwnNodeEntity persistedNode =em.find(SdwnNodeEntity.class,node.getId());
 

@@ -9,7 +9,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class Neighbor extends SdwnNodeEntity
+public class SdwnNeighbor extends SdwnNodeEntity
 {
     public final static int NEIGHBOR_INDEX=13;
 
@@ -17,38 +17,38 @@ public class Neighbor extends SdwnNodeEntity
 
     private Double weight;
 
-    public Neighbor()
+    public SdwnNeighbor()
     {
     }
 
-    public Neighbor(Long address, Double weight, DeviceConnectionEntity device)
+    public SdwnNeighbor(Long address, Double weight, DeviceConnectionEntity device)
     {
         super(address);
         this.weight = weight;
         setDevice(device);
     }
 
-    public Neighbor(Long address,Integer rssi, DeviceConnectionEntity device)
+    public SdwnNeighbor(Long address, Integer rssi, DeviceConnectionEntity device)
     {
         super(address, device);
         this.rssi = rssi;
     }
 
-    public Neighbor(Long address, DeviceConnectionEntity device)
+    public SdwnNeighbor(Long address, DeviceConnectionEntity device)
     {
         super(address, device);
     }
 
-    public static Set<Neighbor> createNeighbors(PacketEntity packet)
+    public static Set<SdwnNeighbor> createNeighbors(PacketEntity packet)
     {
-        Set<Neighbor> neighbors = new HashSet<>();
+        Set<SdwnNeighbor> neighbors = new HashSet<>();
         List<Integer> contents = packet.getContent();
 
         for (int i = NEIGHBOR_INDEX; i < contents.size(); i += 3) {
             int add = SdwnPacketHelper.joinAddresses(contents.get(i),
                                                      contents.get(i + 1));
             int rssi = contents.get(i + 2);
-            Neighbor neighbor = new Neighbor(Integer.toUnsignedLong(add), rssi,packet.getDevice());
+            SdwnNeighbor neighbor = new SdwnNeighbor(Integer.toUnsignedLong(add), rssi, packet.getDevice());
             neighbors.add(neighbor);
         }
 
@@ -103,7 +103,7 @@ public class Neighbor extends SdwnNodeEntity
 //    @Override
 //    public boolean equals(Object obj)
 //    {
-//        if (!(obj instanceof Neighbor))
+//        if (!(obj instanceof SdwnNeighbor))
 //            return false;
 //        if (obj == this)
 //            return true;
@@ -112,7 +112,7 @@ public class Neighbor extends SdwnNodeEntity
 //        if (getClass() != obj.getClass())
 //            return false;
 //
-//        Neighbor rhs = (Neighbor) obj;
+//        SdwnNeighbor rhs = (SdwnNeighbor) obj;
 //
 //        return this.getAddress().equals(rhs.getAddress())&&
 //                this.getDevice().getId().equals(rhs.getDevice().getId())&&

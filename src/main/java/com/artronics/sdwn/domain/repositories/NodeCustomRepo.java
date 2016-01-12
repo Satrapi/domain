@@ -1,7 +1,7 @@
 package com.artronics.sdwn.domain.repositories;
 
 import com.artronics.sdwn.domain.entities.NetworkSession;
-import com.artronics.sdwn.domain.entities.node.Neighbor;
+import com.artronics.sdwn.domain.entities.node.SdwnNeighbor;
 import com.artronics.sdwn.domain.entities.node.SdwnNodeEntity;
 
 import java.util.Set;
@@ -12,5 +12,5 @@ public interface NodeCustomRepo
 
     Set<SdwnNodeEntity> fetchSessionActiveNodes(NetworkSession session);
 
-    Set<Neighbor> persistNeighbors(SdwnNodeEntity node,Set<Neighbor> neighbors);
+    Set<SdwnNeighbor> persistNeighbors(SdwnNodeEntity node, Set<SdwnNeighbor> neighbors);
 }
