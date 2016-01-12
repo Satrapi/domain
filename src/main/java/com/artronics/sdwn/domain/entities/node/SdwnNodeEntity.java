@@ -5,12 +5,9 @@ import com.artronics.sdwn.domain.entities.NetworkSession;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Table(name = "nodes")
-@Inheritance(strategy = InheritanceType.JOINED)
 public class SdwnNodeEntity implements Node
 {
     protected Long id;
@@ -20,8 +17,6 @@ public class SdwnNodeEntity implements Node
     protected NetworkSession session;
 
     protected DeviceConnectionEntity device;
-
-    private Set<Neighbor> neighbors = new HashSet<>();
 
     //Normal as default value
     protected Type type = Type.NORMAL;
@@ -95,19 +90,6 @@ public class SdwnNodeEntity implements Node
         this.device = device;
     }
 
-    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-    @JoinTable(name = "node_neighbor",joinColumns = {@JoinColumn(name = "node_id")},
-            inverseJoinColumns = {@JoinColumn(name = "neighbor_id")})
-    public Set<Neighbor> getNeighbors()
-    {
-        return neighbors;
-    }
-
-    public void setNeighbors(Set<Neighbor> neighbors)
-    {
-        this.neighbors = neighbors;
-    }
-
     @Enumerated(EnumType.STRING)
     @Column(name = "type", nullable = false)
     public Type getType()
@@ -173,13 +155,6 @@ public class SdwnNodeEntity implements Node
     protected void onUpdate()
     {
         updated = new Date();
-    }
-
-    public void addNeighbor(Neighbor neighbor){
-        if (this.neighbors.contains(neighbor)){
-            this.neighbors.remove(neighbor);
-        }
-        this.neighbors.add(neighbor);
     }
 
     public enum Type

@@ -10,6 +10,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -50,8 +51,6 @@ public class NodeRepoImpl implements NodeCustomRepo
     {
         SdwnNodeEntity persistedNode =em.find(SdwnNodeEntity.class,node.getId());
 
-        persistedNode.setNeighbors(neighbors);
-
-        return neighbors;
+        throw new NotImplementedException();
     }
 }

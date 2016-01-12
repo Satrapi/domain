@@ -5,14 +5,10 @@ import com.artronics.sdwn.domain.entities.packet.PacketEntity;
 import com.artronics.sdwn.domain.entities.packet.SdwnPacketHelper;
 
 import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-@Entity
-@Table(name = "neighbors")
 public class Neighbor extends SdwnNodeEntity
 {
     public final static int NEIGHBOR_INDEX=13;
