@@ -15,15 +15,23 @@ public class Neighbor extends SdwnNodeEntity
 
     private Integer rssi;
 
+    private Double weight;
+
     public Neighbor()
     {
     }
 
-    public Neighbor(Long address, int rssi, DeviceConnectionEntity device)
+    public Neighbor(Long address, Double weight, DeviceConnectionEntity device)
     {
         super(address);
-        this.rssi = rssi;
+        this.weight = weight;
         setDevice(device);
+    }
+
+    public Neighbor(Long address,Integer rssi, DeviceConnectionEntity device)
+    {
+        super(address, device);
+        this.rssi = rssi;
     }
 
     public Neighbor(Long address, DeviceConnectionEntity device)
@@ -58,7 +66,17 @@ public class Neighbor extends SdwnNodeEntity
         return s;
     }
 
-    @Column(name = "rssi",nullable = false,unique = false)
+    @Column(name = "weight",nullable = false,unique = false)
+    public Double getWeight()
+    {
+        return weight;
+    }
+
+    public void setWeight(Double weight)
+    {
+        this.weight = weight;
+    }
+
     public Integer getRssi()
     {
         return rssi;
@@ -69,7 +87,7 @@ public class Neighbor extends SdwnNodeEntity
         this.rssi = rssi;
     }
 
-//    @Override
+    //    @Override
 //    public int hashCode()
 //    {
 //        int result = super.hashCode();
@@ -77,7 +95,7 @@ public class Neighbor extends SdwnNodeEntity
 //        //use getters for getting fields(for ORM) see this SO answer:
 //        //http://stackoverflow.com/questions/27581/what-issues-should-be-considered-when-overriding-equals-and-hashcode-in-java
 //
-//        result = prime * result + getRssi();
+//        result = prime * result + getWeight();
 //
 //        return result;
 //    }
@@ -98,6 +116,6 @@ public class Neighbor extends SdwnNodeEntity
 //
 //        return this.getAddress().equals(rhs.getAddress())&&
 //                this.getDevice().getId().equals(rhs.getDevice().getId())&&
-//                this.getRssi().equals(rhs.getRssi());
+//                this.getWeight().equals(rhs.getWeight());
 //    }
 }

@@ -44,6 +44,9 @@ public class DeviceConnectionEntity implements Serializable
         this.url = url;
         this.sinkAddress = sinkAddress;
     }
+    public DeviceConnectionEntity(Long id){
+        this.id = id;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -91,7 +94,7 @@ public class DeviceConnectionEntity implements Serializable
         this.description = description;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.MERGE)
     @JoinColumn(name = "controller_id", nullable = false)
     public SdwnControllerEntity getSdwnController()
     {
