@@ -26,6 +26,28 @@ public class NodeAndNeighborTest extends BaseRepoTest
     }
 
     @Test
+    public void it_should_maintain_a_mutal_rel(){
+        SdwnNodeEntity node = persistNeighbors(20L,21L,222);
+        Long nodeId =node.getId();
+        Set<Neighbor> neighbors = node.getNeighbors();
+        Long neId=null;
+        for (Neighbor neighbor : neighbors) {
+            neId = neighbor.getId();
+            break;
+        }
+
+        SdwnNodeEntity neighborNode=nodeRepo.findOne(neId);
+        neighbors = neighborNode.getNeighbors();
+
+        assertThat(neighbors.size(),equalTo(1));
+        for (Neighbor neighbor : neighbors) {
+
+            break;
+        }
+
+    }
+
+    @Test
     public void it_should_update_current_neighbor_if_rssi_changed(){
         SdwnNodeEntity node = persistNeighbors(20L,21L,222);
         Neighbor ne = createNeighbor(21L,233);

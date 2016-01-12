@@ -62,6 +62,15 @@ public class NodeRepoTest extends BaseRepoTest
             assertNotNull(n.getId());
         }
     }
+
+    @Test
+    public void test_fetchSessionActiveNodes(){
+
+    }
+    private void createNetworkWithNodes(){
+
+    }
+
     private SdwnNodeEntity persistNode(SdwnNodeEntity node){
         nodeRepo.create(node,device.getId());
 

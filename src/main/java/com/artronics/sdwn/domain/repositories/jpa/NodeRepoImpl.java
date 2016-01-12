@@ -1,6 +1,7 @@
 package com.artronics.sdwn.domain.repositories.jpa;
 
 import com.artronics.sdwn.domain.entities.DeviceConnectionEntity;
+import com.artronics.sdwn.domain.entities.NetworkSession;
 import com.artronics.sdwn.domain.entities.node.Neighbor;
 import com.artronics.sdwn.domain.entities.node.SdwnNodeEntity;
 import com.artronics.sdwn.domain.repositories.DeviceConnectionRepo;
@@ -36,6 +37,12 @@ public class NodeRepoImpl implements NodeCustomRepo
         em.persist(node);
 
         return node;
+    }
+
+    @Override
+    public Set<SdwnNodeEntity> fetchSessionActiveNodes(NetworkSession session)
+    {
+        return null;
     }
 
     @Override
