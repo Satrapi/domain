@@ -104,8 +104,9 @@ public class SdwnNeighbor implements Neighbor<SdwnNodeEntity>
     }
 
 //    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "src_node_id")
+//    @OneToOne(fetch = FetchType.EAGER)
+//    @JoinColumn(name = "src_node_id")
+    @Transient
     public SdwnNodeEntity getSrcNode()
     {
         return this.srcNode;
@@ -144,7 +145,7 @@ public class SdwnNeighbor implements Neighbor<SdwnNodeEntity>
     {
         HashCodeBuilder hcb = new HashCodeBuilder();
         hcb.append(this.node);
-        hcb.append(this.srcNode);
+//        hcb.append(this.srcNode);
 
         return hcb.toHashCode();
     }
@@ -160,7 +161,7 @@ public class SdwnNeighbor implements Neighbor<SdwnNodeEntity>
         SdwnNeighbor that = (SdwnNeighbor) obj;
         EqualsBuilder eb = new EqualsBuilder();
         eb.append(this.node,that.node);
-        eb.append(this.srcNode,that.srcNode);
+//        eb.append(this.srcNode,that.srcNode);
 
         return eb.isEquals();
     }
