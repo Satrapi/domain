@@ -15,4 +15,6 @@ public interface NodeCustomRepo
     Set<SdwnNodeEntity> fetchSessionActiveNodes(NetworkSession session);
 
     Set<SdwnNeighbor> persistNeighbors(SdwnNodeEntity node, Set<SdwnNeighbor> neighbors);
+
+    Set<SdwnNeighbor> getNeighbors(SdwnNodeEntity srcNode);
 }

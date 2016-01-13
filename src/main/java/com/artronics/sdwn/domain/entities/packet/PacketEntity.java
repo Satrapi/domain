@@ -2,7 +2,6 @@ package com.artronics.sdwn.domain.entities.packet;
 
 import com.artronics.sdwn.domain.entities.DeviceConnectionEntity;
 import com.artronics.sdwn.domain.entities.NetworkSession;
-import com.artronics.sdwn.domain.entities.node.SdwnNeighbor;
 import com.artronics.sdwn.domain.entities.node.SdwnNodeEntity;
 import org.hibernate.annotations.Cascade;
 
@@ -62,7 +61,6 @@ public class PacketEntity implements Packet, Serializable
 
         packet.type = SdwnPacketHelper.getType(content);
         if (packet.type == Type.REPORT) {
-            packet.srcNode.setNeighbors(SdwnNeighbor.createNeighbors(packet));
             packet.srcNode.setBattery(SdwnPacketHelper.getBattery(content));
         }
 

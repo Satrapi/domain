@@ -41,6 +41,12 @@ public class NodeRepoImpl implements NodeCustomRepo
     }
 
     @Override
+    public Set<SdwnNeighbor> getNeighbors(SdwnNodeEntity srcNode)
+    {
+        return em.find(SdwnNodeEntity.class,srcNode.getId()).getNeighbors();
+    }
+
+    @Override
     @Transactional
     public SdwnNodeEntity create(SdwnNodeEntity node, Long deviceId)
     {
