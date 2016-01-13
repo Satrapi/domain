@@ -9,5 +9,5 @@ public interface NeighborCustomRepo
 {
     SdwnNeighbor persist(SdwnNeighbor neighbor, SdwnNodeEntity node);
 
-    Set<SdwnNeighbor> fetchNeighbors(SdwnNodeEntity srcNode);
+    Set<SdwnNeighbor> getNeighbors(SdwnNodeEntity srcNode);
 }

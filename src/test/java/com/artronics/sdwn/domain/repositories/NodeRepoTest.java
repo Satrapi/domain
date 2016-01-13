@@ -1,6 +1,5 @@
 package com.artronics.sdwn.domain.repositories;
 
-import com.artronics.sdwn.domain.entities.node.SdwnNeighbor;
 import com.artronics.sdwn.domain.entities.node.SdwnNodeEntity;
 import org.junit.Before;
 import org.junit.Test;
@@ -45,29 +44,6 @@ public class NodeRepoTest extends BaseRepoTest
                 assertThat(n.getBattery(),equalTo(87));
         });
         assertThat(nodeRepo.count(),equalTo(1L));
-
-    }
-
-
-    @Test
-    public void it_should_add_neighbor(){
-        SdwnNodeEntity node141= new SdwnNodeEntity(141L,device);
-        SdwnNeighbor n0_141 = new SdwnNeighbor(node141, 205, 50D);
-        node0.getNeighbors().add(n0_141);
-        nodeRepo.save(node0);
-
-
-    }
-
-    @Test
-    @Transactional
-    public void test_save(){
-        SdwnNodeEntity node = new SdwnNodeEntity(SINK_ADD);
-        node.setDevice(device);
-
-        nodeRepo.save(node);
-
-        assertNotNull(node.getId());
     }
 
     @Test
@@ -78,19 +54,5 @@ public class NodeRepoTest extends BaseRepoTest
         nodeRepo.create(node,device.getId());
 
         assertNotNull(node.getId());
-    }
-
-    @Test
-    public void test_fetchSessionActiveNodes(){
-
-    }
-    private void createNetworkWithNodes(){
-
-    }
-
-    private SdwnNodeEntity persistNode(SdwnNodeEntity node){
-        nodeRepo.create(node,device.getId());
-
-        return node;
     }
 }

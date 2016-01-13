@@ -16,5 +16,4 @@ public interface NodeCustomRepo
 
     Set<SdwnNeighbor> persistNeighbors(SdwnNodeEntity node, Set<SdwnNeighbor> neighbors);
 
-    Set<SdwnNeighbor> getNeighbors(SdwnNodeEntity srcNode);
 }

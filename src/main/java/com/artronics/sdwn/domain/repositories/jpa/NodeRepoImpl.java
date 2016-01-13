@@ -40,11 +40,6 @@ public class NodeRepoImpl implements NodeCustomRepo
         return node;
     }
 
-    @Override
-    public Set<SdwnNeighbor> getNeighbors(SdwnNodeEntity srcNode)
-    {
-        return em.find(SdwnNodeEntity.class,srcNode.getId()).getNeighbors();
-    }
 
     @Override
     @Transactional

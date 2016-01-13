@@ -3,7 +3,6 @@ package com.artronics.sdwn.domain.helpers;
 import com.artronics.sdwn.domain.entities.DeviceConnectionEntity;
 import com.artronics.sdwn.domain.entities.NetworkSession;
 import com.artronics.sdwn.domain.entities.SdwnControllerEntity;
-import com.artronics.sdwn.domain.entities.node.SdwnNeighbor;
 import com.artronics.sdwn.domain.entities.node.SdwnNodeEntity;
 import com.artronics.sdwn.domain.repositories.*;
 import org.apache.log4j.Logger;
@@ -182,22 +181,6 @@ public class SeedNetworkGraph
     @Transactional
     protected void persistNodeLinks()
     {
-
-
-        SdwnNeighbor n1_245 = new SdwnNeighbor(sink2, node245, 10D, 245);
-//        sink2.getNeighbors().add(n1_245);
-//        neighborRepo.save(n1_245);
-//        nodeRepo.save(sink2);
-
-        SdwnNeighbor n245_246 = new SdwnNeighbor(node245, node246, 20D, 235);
-//        neighborRepo.persist(n245_246,node245);
-        SdwnNeighbor n245_30 = new SdwnNeighbor(node245, sameAddNode2, 100D, 155);
-//        neighborRepo.persist(n245_30,node245);
-//        node245.getNeighbors().add(n245_30);
-//        node245.getNeighbors().add(n245_246);
-
-//        nodeRepo.save(node245);
-
     }
 
     @Autowired

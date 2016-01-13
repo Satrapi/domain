@@ -21,8 +21,6 @@ public class SdwnNeighbor implements Neighbor<SdwnNodeEntity>
 
     private SdwnNodeEntity node;
 
-    private SdwnNodeEntity srcNode;
-
     private Integer rssi;
 
     private Double weight;
@@ -31,12 +29,10 @@ public class SdwnNeighbor implements Neighbor<SdwnNodeEntity>
     {
     }
 
-    public SdwnNeighbor(SdwnNodeEntity srcNode,
-                        SdwnNodeEntity node,
+    public SdwnNeighbor(SdwnNodeEntity node,
                         Double weight,Integer rssi)
     {
         this.node = node;
-        this.srcNode = srcNode;
         this.rssi = rssi;
         this.weight = weight;
     }
@@ -95,7 +91,6 @@ public class SdwnNeighbor implements Neighbor<SdwnNodeEntity>
     }
 
     @Override
-//    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "node_id")
     public SdwnNodeEntity getNode()
@@ -106,20 +101,6 @@ public class SdwnNeighbor implements Neighbor<SdwnNodeEntity>
     public void setNode(SdwnNodeEntity node)
     {
         this.node = node;
-    }
-
-//    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-//    @OneToOne(fetch = FetchType.EAGER)
-//    @JoinColumn(name = "src_node_id")
-    @Transient
-    public SdwnNodeEntity getSrcNode()
-    {
-        return this.srcNode;
-    }
-
-    public void setSrcNode(SdwnNodeEntity srcNode)
-    {
-        this.srcNode = srcNode;
     }
 
     @Override
@@ -150,7 +131,6 @@ public class SdwnNeighbor implements Neighbor<SdwnNodeEntity>
     {
         HashCodeBuilder hcb = new HashCodeBuilder();
         hcb.append(this.node);
-//        hcb.append(this.srcNode);
 
         return hcb.toHashCode();
     }
@@ -166,31 +146,8 @@ public class SdwnNeighbor implements Neighbor<SdwnNodeEntity>
         SdwnNeighbor that = (SdwnNeighbor) obj;
         EqualsBuilder eb = new EqualsBuilder();
         eb.append(this.node,that.node);
-//        eb.append(this.srcNode,that.srcNode);
 
         return eb.isEquals();
     }
 
-    //        @Override
-//    public int hashCode()
-//    {
-//        HashCodeBuilder hcb = new HashCodeBuilder();
-//        return this.getNode().hashCode();
-//    }
-//
-//    @Override
-//    public boolean equals(Object obj)
-//    {
-//        if (!(obj instanceof SdwnNeighbor))
-//            return false;
-//        if (obj == this)
-//            return true;
-//        if(obj == null)
-//            return false;
-//        if (getClass() != obj.getClass())
-//            return false;
-//
-//        SdwnNeighbor n=(SdwnNeighbor) obj;
-//        return this.node.equals(n.getNode());
-//    }
 }
