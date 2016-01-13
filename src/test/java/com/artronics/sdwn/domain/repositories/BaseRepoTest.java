@@ -55,6 +55,9 @@ public class BaseRepoTest
     protected NodeRepo nodeRepo;
 
     @Autowired
+    protected NeighborRepo neighborRepo;
+
+    @Autowired
     protected PacketRepo packetRepo;
 
     @Autowired

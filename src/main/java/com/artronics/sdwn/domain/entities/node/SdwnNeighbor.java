@@ -25,6 +25,8 @@ public class SdwnNeighbor implements Neighbor<SdwnNodeEntity>
 
     private Double weight;
 
+    private SdwnNodeEntity srcNode;
+
     public SdwnNeighbor()
     {
     }
@@ -124,6 +126,18 @@ public class SdwnNeighbor implements Neighbor<SdwnNodeEntity>
     public void setRssi(Integer rssi)
     {
         this.rssi = rssi;
+    }
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "src_node_id",nullable = false)
+    public SdwnNodeEntity getSrcNode()
+    {
+        return srcNode;
+    }
+
+    public void setSrcNode(SdwnNodeEntity srcNode)
+    {
+        this.srcNode = srcNode;
     }
 
     @Override
