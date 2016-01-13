@@ -61,8 +61,10 @@ public class PacketEntity implements Packet, Serializable
         packet.dstNode = dst;
 
         packet.type = SdwnPacketHelper.getType(content);
-        if (packet.type == Type.REPORT)
+        if (packet.type == Type.REPORT) {
             packet.srcNode.setNeighbors(SdwnNeighbor.createNeighbors(packet));
+            packet.srcNode.setBattery(SdwnPacketHelper.getBattery(content));
+        }
 
         packet.payload = SdwnPacketHelper.getPayload(content);
 

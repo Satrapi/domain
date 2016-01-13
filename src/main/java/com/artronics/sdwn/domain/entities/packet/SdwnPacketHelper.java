@@ -7,6 +7,11 @@ import static com.artronics.sdwn.domain.entities.packet.Packet.ByteIndex.*;
 
 public final class SdwnPacketHelper
 {
+    public static int getBattery(List<Integer> content)
+    {
+        return content.get(Packet.ByteIndex.BATTERY.getValue());
+    }
+
     public static List<Integer> getPayload(List<Integer> buffer)
     {
         return new ArrayList<>(buffer.subList(Packet.HEADER_LEN,buffer.size()));
