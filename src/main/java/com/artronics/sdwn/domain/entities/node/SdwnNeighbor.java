@@ -1,5 +1,6 @@
 package com.artronics.sdwn.domain.entities.node;
 
+import com.artronics.sdwn.domain.entities.packet.Packet;
 import com.artronics.sdwn.domain.entities.packet.PacketEntity;
 import com.artronics.sdwn.domain.entities.packet.SdwnPacketHelper;
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -61,6 +62,9 @@ public class SdwnNeighbor implements Neighbor<SdwnNodeEntity>
 
     public static Set<SdwnNeighbor> createNeighbors(PacketEntity packet)
     {
+        if (packet.getType()!= Packet.Type.REPORT)
+            throw new IllegalArgumentException("Packet must be of type:" + Packet.Type.REPORT);
+
         Set<SdwnNeighbor> neighbors = new HashSet<>();
         List<Integer> contents = packet.getContent();
 
@@ -68,7 +72,8 @@ public class SdwnNeighbor implements Neighbor<SdwnNodeEntity>
             int add = SdwnPacketHelper.joinAddresses(contents.get(i),
                                                      contents.get(i + 1));
             int rssi = contents.get(i + 2);
-            SdwnNodeEntity node = new SdwnNodeEntity(Integer.toUnsignedLong(add));
+            SdwnNodeEntity node = new SdwnNodeEntity(Integer.toUnsignedLong(add),packet.getDevice());
+            node.setStatus(SdwnNodeEntity.Status.IDLE);
             SdwnNeighbor neighbor = new SdwnNeighbor(node,rssi);
             neighbors.add(neighbor);
         }
