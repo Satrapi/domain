@@ -34,6 +34,12 @@ public class SdwnNodeEntity implements Node,Serializable
     protected Date created;
     protected Date updated;
 
+    public static SdwnNodeEntity create(Long address,DeviceConnectionEntity device){
+        SdwnNodeEntity n = new SdwnNodeEntity(address,device);
+
+        return n;
+    }
+
     public SdwnNodeEntity()
     {
     }

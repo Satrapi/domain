@@ -50,8 +50,8 @@ public class PacketEntity implements Packet, Serializable
         packet.srcShortAdd = SdwnPacketHelper.getSourceAddress(content);
         packet.dstShortAdd = SdwnPacketHelper.getDestinationAddress(content);
 
-        SdwnNodeEntity src = new SdwnNodeEntity(Integer.toUnsignedLong(packet.srcShortAdd),device);
-        SdwnNodeEntity dst =  new SdwnNodeEntity(Integer.toUnsignedLong(packet.dstShortAdd),device);
+        SdwnNodeEntity src =  SdwnNodeEntity.create(Integer.toUnsignedLong(packet.srcShortAdd),device);
+        SdwnNodeEntity dst =  SdwnNodeEntity.create(Integer.toUnsignedLong(packet.dstShortAdd),device);
         packet.srcNode = src;
         packet.dstNode = dst;
 
