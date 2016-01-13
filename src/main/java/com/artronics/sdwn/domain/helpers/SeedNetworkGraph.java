@@ -3,14 +3,13 @@ package com.artronics.sdwn.domain.helpers;
 import com.artronics.sdwn.domain.entities.DeviceConnectionEntity;
 import com.artronics.sdwn.domain.entities.NetworkSession;
 import com.artronics.sdwn.domain.entities.SdwnControllerEntity;
+import com.artronics.sdwn.domain.entities.node.SdwnNeighbor;
 import com.artronics.sdwn.domain.entities.node.SdwnNodeEntity;
-import com.artronics.sdwn.domain.repositories.DeviceConnectionRepo;
-import com.artronics.sdwn.domain.repositories.NodeRepo;
-import com.artronics.sdwn.domain.repositories.SdwnControllerRepo;
-import com.artronics.sdwn.domain.repositories.SessionRepo;
+import com.artronics.sdwn.domain.repositories.*;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 @Component
 public class SeedNetworkGraph
@@ -41,6 +40,7 @@ public class SeedNetworkGraph
     private SdwnControllerRepo controllerRepo;
     private DeviceConnectionRepo deviceRepo;
     private NodeRepo nodeRepo;
+    private NeighborRepo neighborRepo;
 
     private boolean persist = false;
 
@@ -57,6 +57,7 @@ public class SeedNetworkGraph
         createNodes(activeSession);
 
         persistNodes(persist);
+        persistNodeLinks();
     }
 
     private void createNetwork()
@@ -140,6 +141,64 @@ public class SeedNetworkGraph
         }
     }
 
+    @Transactional
+    private void persistNodeLinks(){
+        /*
+            Device1
+            node number 30 is sameAddNode
+            look for code for weight values
+            Graph is like
+                        sink:0
+                          /   \
+                        w50  w10
+                        /      \
+                     135 --w20-- 30
+                       \         /
+                       w25    w100
+                         \    /
+                          136
+                           |     |
+                          w30
+                          /
+                        137
+
+         */
+
+
+
+        /*
+            Device2
+            node number 30 is sameAddNode
+            look for code for weight values
+            Graph is like
+                        sink
+                            |
+                           w10
+                            |
+                           245
+                          /   \
+                        w20    w100
+                       /         \
+                     246 --w30-- 30
+
+         */
+
+        SdwnNeighbor n1_245 = new SdwnNeighbor(sink2,node245,10D,245);
+//        sink2.getNeighbors().add(n1_245);
+//        neighborRepo.save(n1_245);
+//        nodeRepo.save(sink2);
+
+        SdwnNeighbor n245_246 = new SdwnNeighbor(node245,node246,20D,235);
+//        neighborRepo.persist(n245_246,node245);
+        SdwnNeighbor n245_30 = new SdwnNeighbor(node245,sameAddNode2,100D,155);
+//        neighborRepo.persist(n245_30,node245);
+//        node245.getNeighbors().add(n245_30);
+//        node245.getNeighbors().add(n245_246);
+
+//        nodeRepo.save(node245);
+
+    }
+
     @Autowired
     public void setSessionRepo(SessionRepo sessionRepo)
     {
@@ -163,6 +222,12 @@ public class SeedNetworkGraph
     public void setDeviceRepo(DeviceConnectionRepo deviceRepo)
     {
         this.deviceRepo = deviceRepo;
+    }
+
+    @Autowired
+    public void setNeighborRepo(NeighborRepo neighborRepo)
+    {
+        this.neighborRepo = neighborRepo;
     }
 
     public NetworkSession getActiveSession()

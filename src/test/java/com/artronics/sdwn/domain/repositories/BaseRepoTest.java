@@ -3,6 +3,7 @@ package com.artronics.sdwn.domain.repositories;
 import com.artronics.sdwn.domain.entities.DeviceConnectionEntity;
 import com.artronics.sdwn.domain.entities.NetworkSession;
 import com.artronics.sdwn.domain.entities.SdwnControllerEntity;
+import com.artronics.sdwn.domain.entities.node.SdwnNodeEntity;
 import com.artronics.sdwn.domain.helpers.SeedNetworkGraph;
 import org.junit.After;
 import org.junit.Before;
@@ -35,6 +36,14 @@ public class BaseRepoTest
     protected DeviceConnectionEntity device;
     protected NetworkSession session;
 
+    protected SdwnNodeEntity node0  ;
+    protected SdwnNodeEntity node1  ;
+    protected SdwnNodeEntity node30 ;
+    protected SdwnNodeEntity node135;
+    protected SdwnNodeEntity node136;
+    protected SdwnNodeEntity node137;
+    protected SdwnNodeEntity node245;
+
     @Autowired
     protected SdwnControllerRepo controllerRepo;
 
@@ -58,6 +67,17 @@ public class BaseRepoTest
         seeder.seed(true);
         device =seeder.getDevice1();
         session = seeder.getActiveSession();
+
+        node0 = seeder.getSink1();
+        node1 = seeder.getSink2();
+
+        node30 = seeder.getSameAddNode1();
+
+        node135 = seeder.getNode135();
+        node136 = seeder.getNode136();
+        node137 = seeder.getNode137();
+
+        node245 = seeder.getNode245();
     }
 
     //    @Ignore("This is a test in RepoBaseTest which should be run for debugging base class")

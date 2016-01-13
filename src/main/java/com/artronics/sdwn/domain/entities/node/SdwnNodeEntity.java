@@ -2,9 +2,13 @@ package com.artronics.sdwn.domain.entities.node;
 
 import com.artronics.sdwn.domain.entities.DeviceConnectionEntity;
 import com.artronics.sdwn.domain.entities.NetworkSession;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -19,7 +23,7 @@ public class SdwnNodeEntity implements Node
 
     protected DeviceConnectionEntity device;
 
-    protected Set<SdwnNeighbor> neighbors;
+    protected Set<SdwnNeighbor> neighbors = new HashSet<>();
 
     //Normal as default value
     protected Type type = Type.NORMAL;
@@ -58,7 +62,7 @@ public class SdwnNodeEntity implements Node
         this.id = id;
     }
 
-    @Column(name = "address", nullable = false, unique = false)
+    @Column(name = "address", nullable = false, unique = false,updatable = false)
     public Long getAddress()
     {
         return address;
@@ -93,8 +97,9 @@ public class SdwnNodeEntity implements Node
         this.device = device;
     }
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL,
-            mappedBy = "node")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "node")
+    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations
+            .CascadeType.PERSIST})
     public Set<SdwnNeighbor> getNeighbors()
     {
         return neighbors;
@@ -105,6 +110,10 @@ public class SdwnNodeEntity implements Node
     {
         this.neighbors = neighbors;
     }
+
+//    public void addNeighbor(SdwnNeighbor neighbor){
+//        this.neighbors.add(neighbor);
+//    }
 
     @Enumerated(EnumType.STRING)
     @Column(name = "type", nullable = false)
@@ -181,6 +190,7 @@ public class SdwnNodeEntity implements Node
 
     public enum Status
     {
+        IDLE,
         ACTIVE,
         DISABLE,
     }
@@ -192,20 +202,26 @@ public class SdwnNodeEntity implements Node
         //http://stackoverflow.com/questions/27581/what-issues-should-be-considered-when
         // -overriding-equals-and-hashcode-in-java
 
-        Long id_l = getDevice().getId() == null ? 0 : getDevice().getId();
-        Long add_l = getAddress();
+//        Long id_l = getDevice().getId() == null ? 0 : getDevice().getId();
+//        Long add_l = getAddress();
+//
+//        int add = (int) (add_l ^ (add_l >>> 32));
+//        int id = (int) (id_l ^ (id_l >>> 32));
+//
+//        final int prime = 31;
+//
+//        int result = 1;
+//
+//        result = prime * result + add;
+//        result = prime * result + id;
+//
+//        return result;
 
-        int add = (int) (add_l ^ (add_l >>> 32));
-        int id = (int) (id_l ^ (id_l >>> 32));
+        HashCodeBuilder hcb = new HashCodeBuilder();
+        hcb.append(this.device);
+        hcb.append(this.address);
 
-        final int prime = 31;
-
-        int result = 1;
-
-        result = prime * result + add;
-        result = prime * result + id;
-
-        return result;
+        return hcb.toHashCode();
     }
 
     @Override
@@ -215,15 +231,14 @@ public class SdwnNodeEntity implements Node
             return false;
         if (obj == this)
             return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
 
-        SdwnNodeEntity rhs = (SdwnNodeEntity) obj;
+        SdwnNodeEntity that = (SdwnNodeEntity) obj;
+        EqualsBuilder eb = new EqualsBuilder();
 
-        return this.getAddress().equals(rhs.getAddress()) &&
-                this.getDevice().getId().equals(rhs.getDevice().getId());
+        eb.append(this.device,that.device);
+        eb.append(this.address,that.address);
+
+        return eb.isEquals();
     }
 
     @Override
