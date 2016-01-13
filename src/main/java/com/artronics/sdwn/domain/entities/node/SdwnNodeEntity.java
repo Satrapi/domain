@@ -212,7 +212,8 @@ public class SdwnNodeEntity implements Node
     @Override
     public String toString()
     {
-        return "Node: "+address.toString();
+        String node = this.getType() == Type.NORMAL ? "Node: ": "Sink: ";
+        return String.format(node+"%-5d",this.getAddress());
     }
 
 }
