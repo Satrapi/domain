@@ -8,6 +8,8 @@ import java.util.Set;
 
 public interface NodeCustomRepo
 {
+    SdwnNodeEntity persist(SdwnNodeEntity node);
+
     SdwnNodeEntity create(SdwnNodeEntity node,Long deviceId);
 
     Set<SdwnNodeEntity> fetchSessionActiveNodes(NetworkSession session);

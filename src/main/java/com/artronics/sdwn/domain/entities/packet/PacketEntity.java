@@ -2,6 +2,7 @@ package com.artronics.sdwn.domain.entities.packet;
 
 import com.artronics.sdwn.domain.entities.DeviceConnectionEntity;
 import com.artronics.sdwn.domain.entities.NetworkSession;
+import com.artronics.sdwn.domain.entities.node.SdwnNeighbor;
 import com.artronics.sdwn.domain.entities.node.SdwnNodeEntity;
 
 import javax.persistence.*;
@@ -45,6 +46,9 @@ public class PacketEntity implements Packet, Serializable
     public static PacketEntity create(List<Integer> content,DeviceConnectionEntity device)
     {
         PacketEntity packet = new PacketEntity();
+
+        packet.content = content;
+
         packet.setDevice(device);
 
         packet.srcShortAdd = SdwnPacketHelper.getSourceAddress(content);
@@ -55,7 +59,9 @@ public class PacketEntity implements Packet, Serializable
         packet.srcNode = src;
         packet.dstNode = dst;
 
-        packet.content = content;
+        packet.type = SdwnPacketHelper.getType(content);
+        if (packet.type == Type.REPORT)
+            packet.srcNode.setNeighbors(SdwnNeighbor.createNeighbors(packet));
 
         packet.payload = SdwnPacketHelper.getPayload(content);
 
@@ -65,7 +71,6 @@ public class PacketEntity implements Packet, Serializable
         packet.netId = SdwnPacketHelper.getNetId(content);
 
 
-        packet.type = SdwnPacketHelper.getType(content);
 
         packet.nextHop = SdwnPacketHelper.getNextHopAddress(content);
 

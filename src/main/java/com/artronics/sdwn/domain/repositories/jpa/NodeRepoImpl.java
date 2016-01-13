@@ -28,6 +28,14 @@ public class NodeRepoImpl implements NodeCustomRepo
     private DeviceConnectionRepo deviceRepo;
 
     @Override
+    public SdwnNodeEntity persist(SdwnNodeEntity node)
+    {
+        em.persist(node);
+
+        return node;
+    }
+
+    @Override
     @Transactional
     public SdwnNodeEntity create(SdwnNodeEntity node, Long deviceId)
     {
