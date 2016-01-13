@@ -14,6 +14,8 @@ public class SdwnNeighbor implements Neighbor<SdwnNodeEntity>
 {
     public final static int NEIGHBOR_INDEX=13;
 
+    private Long id;
+
     private SdwnNodeEntity node;
     private Integer rssi;
 
@@ -52,12 +54,30 @@ public class SdwnNeighbor implements Neighbor<SdwnNodeEntity>
         return neighbors;
     }
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false, unique = true)
+    public Long getId()
+    {
+        return id;
+    }
+
+    public void setId(Long id)
+    {
+        this.id = id;
+    }
+
     @Override
     @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @JoinColumn(name = "node_id")
     public SdwnNodeEntity getNode()
     {
         return node;
+    }
+
+    public void setNode(SdwnNodeEntity node)
+    {
+        this.node = node;
     }
 
     @Override
