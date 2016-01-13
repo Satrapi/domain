@@ -10,6 +10,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
@@ -19,8 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {
-        RepositoryConfigTest.class,
-//        SatrapiApplication.class
+        BaseRepoTest.BaseRepoConfig.class
 })
 @ActiveProfiles("test")
 public class BaseRepoTest
@@ -91,6 +93,20 @@ public class BaseRepoTest
     public void after() throws Exception
     {
 //        controllerRepo.deleteAll();
+    }
+
+    @Configuration
+    @Import(RepositoryConfigTest.class)
+    static class BaseRepoConfig{
+
+        @Autowired
+        private SeedNetworkGraph seeder;
+
+        @Bean
+        public NetworkSession getSession(){
+            return seeder.getActiveSession();
+        }
+
     }
 
 }

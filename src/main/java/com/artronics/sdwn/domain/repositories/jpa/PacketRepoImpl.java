@@ -1,6 +1,7 @@
 package com.artronics.sdwn.domain.repositories.jpa;
 
 import com.artronics.sdwn.domain.entities.DeviceConnectionEntity;
+import com.artronics.sdwn.domain.entities.NetworkSession;
 import com.artronics.sdwn.domain.entities.packet.PacketEntity;
 import com.artronics.sdwn.domain.repositories.DeviceConnectionRepo;
 import com.artronics.sdwn.domain.repositories.PacketCustomRepo;
@@ -21,7 +22,20 @@ public class PacketRepoImpl implements PacketCustomRepo
     private EntityManager em;
 
     @Autowired
+    private NetworkSession session;
+
+    @Autowired
     private DeviceConnectionRepo deviceRepo;
+
+
+    @Override
+    public PacketEntity persist(PacketEntity packet)
+    {
+        packet.setSession(session);
+        em.persist(packet);
+
+        return packet;
+    }
 
     @Override
     @Transactional

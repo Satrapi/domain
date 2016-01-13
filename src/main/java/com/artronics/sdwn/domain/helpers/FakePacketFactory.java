@@ -45,14 +45,14 @@ public class FakePacketFactory
         return new ArrayList<>(header);
     }
 
-    public Packet createReportPacket()
+    public PacketEntity createReportPacket()
     {
-        return PacketEntity.create(createRawReportPacket());
+        return PacketEntity.create(createRawReportPacket(),null);
     }
 
     public PacketEntity createReportPacket(int src, int dst, int dis, int bat, List<Integer> neighbors)
     {
-        return PacketEntity.create(createRawReportPacket(src, dst, dis, bat, neighbors));
+        return PacketEntity.create(createRawReportPacket(src, dst, dis, bat, neighbors),null);
     }
 
     public PacketEntity createReportPacket(int src, int dst, List<Integer> neighbors)
@@ -107,12 +107,12 @@ public class FakePacketFactory
 
     public Packet createDataPacket(int src, int dst)
     {
-        return PacketEntity.create(createRawDataPacket(src, dst, 10));
+        return PacketEntity.create(createRawDataPacket(src, dst, 10),null);
     }
 
     public Packet createDataPacket()
     {
-        return PacketEntity.create(createRawDataPacket(30, 0, 10));
+        return PacketEntity.create(createRawDataPacket(30, 0, 10),null);
 
     }
 
@@ -141,7 +141,7 @@ public class FakePacketFactory
 
     public Packet createRuleRequestPacket(int src, int dst, int echoPayloadLen)
     {
-        return PacketEntity.create(createRawRuleRequestPacket(src, dst, echoPayloadLen));
+        return PacketEntity.create(createRawRuleRequestPacket(src, dst, echoPayloadLen),null);
     }
 
     public List<Integer> createRawRuleRequestPacket(int src, int dst, int echoPayloadLen)

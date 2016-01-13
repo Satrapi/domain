@@ -13,6 +13,15 @@ public class PacketRepoTest extends BaseRepoTest
 
     @Test
     @Transactional
+    public void report(){
+        PacketEntity packet = factory.createReportPacket();
+        packet = PacketEntity.create(packet.getContent(),device);
+
+        packetRepo.persist(packet);
+
+    }
+    @Test
+    @Transactional
     public void it_should_save_a_packet(){
         PacketEntity packet = PacketEntity.create(factory.createRawDataPacket(),device);
 
