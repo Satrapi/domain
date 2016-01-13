@@ -7,13 +7,14 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = "nodes")
-public class SdwnNodeEntity implements Node
+public class SdwnNodeEntity implements Node,Serializable
 {
     protected Long id;
 

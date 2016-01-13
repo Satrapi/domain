@@ -2,6 +2,7 @@ package com.artronics.sdwn.domain.entities.packet;
 
 import com.artronics.sdwn.domain.entities.DeviceConnectionEntity;
 import com.artronics.sdwn.domain.entities.NetworkSession;
+import com.artronics.sdwn.domain.entities.node.SdwnNodeEntity;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -16,6 +17,10 @@ public class PacketEntity implements Packet, Serializable
     private DeviceConnectionEntity device;
 
     private NetworkSession session;
+
+    private SdwnNodeEntity srcNode;
+
+    private SdwnNodeEntity dstNode;
 
     private List<Integer> content;
 
@@ -37,9 +42,18 @@ public class PacketEntity implements Packet, Serializable
     {
     }
 
-    public static PacketEntity create(List<Integer> content)
+    public static PacketEntity create(List<Integer> content,DeviceConnectionEntity device)
     {
         PacketEntity packet = new PacketEntity();
+        packet.setDevice(device);
+
+        packet.srcShortAdd = SdwnPacketHelper.getSourceAddress(content);
+        packet.dstShortAdd = SdwnPacketHelper.getDestinationAddress(content);
+
+        SdwnNodeEntity src = new SdwnNodeEntity(Integer.toUnsignedLong(packet.srcShortAdd),device);
+        SdwnNodeEntity dst =  new SdwnNodeEntity(Integer.toUnsignedLong(packet.dstShortAdd),device);
+        packet.srcNode = src;
+        packet.dstNode = dst;
 
         packet.content = content;
 
@@ -50,8 +64,6 @@ public class PacketEntity implements Packet, Serializable
         packet.len = SdwnPacketHelper.getSize(content);
         packet.netId = SdwnPacketHelper.getNetId(content);
 
-        packet.srcShortAdd = SdwnPacketHelper.getSourceAddress(content);
-        packet.dstShortAdd = SdwnPacketHelper.getDestinationAddress(content);
 
         packet.type = SdwnPacketHelper.getType(content);
 
@@ -71,6 +83,30 @@ public class PacketEntity implements Packet, Serializable
     public void setId(Long id)
     {
         this.id = id;
+    }
+
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "src_node_id",nullable = false)
+    public SdwnNodeEntity getSrcNode()
+    {
+        return srcNode;
+    }
+
+    public void setSrcNode(SdwnNodeEntity srcNode)
+    {
+        this.srcNode = srcNode;
+    }
+
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "dst_node_id",nullable = false)
+    public SdwnNodeEntity getDstNode()
+    {
+        return dstNode;
+    }
+
+    public void setDstNode(SdwnNodeEntity dstNode)
+    {
+        this.dstNode = dstNode;
     }
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
