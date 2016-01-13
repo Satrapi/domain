@@ -3,18 +3,25 @@ package com.artronics.sdwn.domain.entities.node;
 import com.artronics.sdwn.domain.entities.packet.PacketEntity;
 import com.artronics.sdwn.domain.entities.packet.SdwnPacketHelper;
 
+import javax.persistence.*;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+@Entity
+@Table(name = "neighbor")
 public class SdwnNeighbor implements Neighbor<SdwnNodeEntity>
 {
     public final static int NEIGHBOR_INDEX=13;
 
-    private final SdwnNodeEntity node;
+    private SdwnNodeEntity node;
     private Integer rssi;
 
     private Double weight;
+
+    public SdwnNeighbor()
+    {
+    }
 
     public SdwnNeighbor(SdwnNodeEntity node, Double weight)
     {
@@ -46,12 +53,15 @@ public class SdwnNeighbor implements Neighbor<SdwnNodeEntity>
     }
 
     @Override
+    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @JoinColumn(name = "node_id")
     public SdwnNodeEntity getNode()
     {
         return node;
     }
 
     @Override
+    @Column(name = "weight",nullable = false,unique = false)
     public Double getWeight()
     {
         return weight;
@@ -62,6 +72,7 @@ public class SdwnNeighbor implements Neighbor<SdwnNodeEntity>
         this.weight = weight;
     }
 
+    @Column(name = "rssi",nullable = false,unique = false)
     public Integer getRssi()
     {
         return rssi;
