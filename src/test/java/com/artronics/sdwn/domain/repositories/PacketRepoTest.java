@@ -14,8 +14,7 @@ public class PacketRepoTest extends BaseRepoTest
     @Test
     @Transactional
     public void it_should_save_a_packet(){
-        PacketEntity packet = PacketEntity.create(factory.createRawDataPacket());
-        packet.setDevice(device);
+        PacketEntity packet = PacketEntity.create(factory.createRawDataPacket(),device);
 
         packetRepo.save(packet);
 
@@ -25,7 +24,7 @@ public class PacketRepoTest extends BaseRepoTest
     @Test
     @Transactional
     public void test_create(){
-        PacketEntity packet = PacketEntity.create(factory.createRawDataPacket());
+        PacketEntity packet = PacketEntity.create(factory.createRawDataPacket(),device);
 
         packetRepo.create(packet,device.getId());
 
