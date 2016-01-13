@@ -25,11 +25,16 @@ public class NodeRepoImpl implements NodeCustomRepo
     private EntityManager em;
 
     @Autowired
+    private NetworkSession session;
+
+    @Autowired
     private DeviceConnectionRepo deviceRepo;
 
     @Override
+    @Transactional
     public SdwnNodeEntity persist(SdwnNodeEntity node)
     {
+        node.setSession(session);
         em.persist(node);
 
         return node;

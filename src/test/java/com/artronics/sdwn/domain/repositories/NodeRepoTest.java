@@ -6,9 +6,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
@@ -24,19 +21,33 @@ public class NodeRepoTest extends BaseRepoTest
     }
 
     @Test
-    public void it(){
-//        SdwnNodeEntity node135_2=node135.
-        nodeRepo.save(node135);
+    public void it_should_persist_a_node(){
+        SdwnNodeEntity node = new SdwnNodeEntity(124L,device);
+        nodeRepo.persist(node);
 
-        List<SdwnNodeEntity> actNode = new ArrayList<>();
-        Iterable<SdwnNodeEntity> nodes =nodeRepo.findAll();
-        for (SdwnNodeEntity node : nodes) {
-            if (node.getAddress().equals(135L))
-                actNode.add(node);
-        }
-
-        assertThat(actNode.size(),equalTo(2));
+        assertNotNull(node.getId());
     }
+
+    @Test
+    @Transactional
+    public void it_should_update_node(){
+        nodeRepo.deleteAll();
+        SdwnNodeEntity node = new SdwnNodeEntity(124L,device);
+        nodeRepo.persist(node);
+
+        node.setBattery(87);
+        nodeRepo.persist(node);
+
+        Iterable<SdwnNodeEntity> it =nodeRepo.findAll();
+        Integer i=new Integer(0);
+        it.forEach((n)->{
+        if (n.equals(node))
+                assertThat(n.getBattery(),equalTo(87));
+        });
+        assertThat(nodeRepo.count(),equalTo(1L));
+
+    }
+
 
     @Test
     public void it_should_add_neighbor(){

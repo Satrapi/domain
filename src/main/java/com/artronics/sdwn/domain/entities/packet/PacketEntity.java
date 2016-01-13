@@ -4,6 +4,7 @@ import com.artronics.sdwn.domain.entities.DeviceConnectionEntity;
 import com.artronics.sdwn.domain.entities.NetworkSession;
 import com.artronics.sdwn.domain.entities.node.SdwnNeighbor;
 import com.artronics.sdwn.domain.entities.node.SdwnNodeEntity;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -104,6 +105,7 @@ public class PacketEntity implements Packet, Serializable
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "dst_node_id",nullable = false)
+    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
     public SdwnNodeEntity getDstNode()
     {
         return dstNode;
