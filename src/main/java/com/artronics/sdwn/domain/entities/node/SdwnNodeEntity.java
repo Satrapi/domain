@@ -4,13 +4,10 @@ import com.artronics.sdwn.domain.entities.DeviceConnectionEntity;
 import com.artronics.sdwn.domain.entities.NetworkSession;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Table(name = "nodes")
@@ -23,8 +20,6 @@ public class SdwnNodeEntity implements Node,Serializable
     protected NetworkSession session;
 
     protected DeviceConnectionEntity device;
-
-    protected Set<SdwnNeighbor> neighbors = new HashSet<>();
 
     //Normal as default value
     protected Type type = Type.NORMAL;
@@ -103,24 +98,6 @@ public class SdwnNodeEntity implements Node,Serializable
     {
         this.device = device;
     }
-
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "node")
-    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations
-            .CascadeType.PERSIST})
-    public Set<SdwnNeighbor> getNeighbors()
-    {
-        return neighbors;
-    }
-
-    public void setNeighbors(
-            Set<SdwnNeighbor> neighbors)
-    {
-        this.neighbors = neighbors;
-    }
-
-//    public void addNeighbor(SdwnNeighbor neighbor){
-//        this.neighbors.add(neighbor);
-//    }
 
     @Enumerated(EnumType.STRING)
     @Column(name = "type", nullable = false)
