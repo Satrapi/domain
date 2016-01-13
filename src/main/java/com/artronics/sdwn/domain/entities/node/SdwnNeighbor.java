@@ -11,10 +11,16 @@ public class SdwnNeighbor implements Neighbor<SdwnNodeEntity>
 {
     public final static int NEIGHBOR_INDEX=13;
 
-    private SdwnNodeEntity node;
+    private final SdwnNodeEntity node;
     private Integer rssi;
 
     private Double weight;
+
+    public SdwnNeighbor(SdwnNodeEntity node, Double weight)
+    {
+        this.node = node;
+        this.weight = weight;
+    }
 
     public SdwnNeighbor(SdwnNodeEntity node, Integer rssi)
     {
@@ -45,11 +51,6 @@ public class SdwnNeighbor implements Neighbor<SdwnNodeEntity>
         return node;
     }
 
-    public void setNode(SdwnNodeEntity node)
-    {
-        this.node = node;
-    }
-
     @Override
     public Double getWeight()
     {
@@ -71,35 +72,25 @@ public class SdwnNeighbor implements Neighbor<SdwnNodeEntity>
         this.rssi = rssi;
     }
 
-    //    @Override
-//    public int hashCode()
-//    {
-//        int result = super.hashCode();
-//        final int prime = 31;
-//        //use getters for getting fields(for ORM) see this SO answer:
-//        //http://stackoverflow.com/questions/27581/what-issues-should-be-considered-when-overriding-equals-and-hashcode-in-java
-//
-//        result = prime * result + getWeight();
-//
-//        return result;
-//    }
+        @Override
+    public int hashCode()
+    {
+        return this.node.hashCode();
+    }
 
-//    @Override
-//    public boolean equals(Object obj)
-//    {
-//        if (!(obj instanceof SdwnNeighbor))
-//            return false;
-//        if (obj == this)
-//            return true;
-//        if(obj == null)
-//            return false;
-//        if (getClass() != obj.getClass())
-//            return false;
-//
-//        SdwnNeighbor rhs = (SdwnNeighbor) obj;
-//
-//        return this.getAddress().equals(rhs.getAddress())&&
-//                this.getDevice().getId().equals(rhs.getDevice().getId())&&
-//                this.getWeight().equals(rhs.getWeight());
-//    }
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (!(obj instanceof SdwnNeighbor))
+            return false;
+        if (obj == this)
+            return true;
+        if(obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+
+        SdwnNeighbor n=(SdwnNeighbor) obj;
+        return this.node.equals(n.getNode());
+    }
 }
