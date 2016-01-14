@@ -69,7 +69,6 @@ public class BaseRepoTest
 //    @Rollback(value = false)
     public void setUp() throws Exception
     {
-//        seeder.seed(true);
         device =seeder.getDevice1();
         session = seeder.getActiveSession();
 
@@ -102,16 +101,6 @@ public class BaseRepoTest
     @Import(RepositoryConfigTest.class)
     @ComponentScan(basePackages = "com.artronics.sdwn.domain")
      static class BaseRepoConfig{
-
-//        @Autowired
-//        private SeedNetworkGraph seeder;
-//
-//        @PostConstruct
-//        @Transactional
-//        public void initTests(){
-//            seeder.seed(true);
-//        }
-
 
     }
 
