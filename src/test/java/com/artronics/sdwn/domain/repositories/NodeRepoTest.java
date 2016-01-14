@@ -30,7 +30,6 @@ public class NodeRepoTest extends BaseRepoTest
     @Test
     @Transactional
     public void it_should_update_node(){
-        nodeRepo.deleteAll();
         SdwnNodeEntity node = new SdwnNodeEntity(124L,device);
         nodeRepo.persist(node);
 
@@ -38,21 +37,10 @@ public class NodeRepoTest extends BaseRepoTest
         nodeRepo.persist(node);
 
         Iterable<SdwnNodeEntity> it =nodeRepo.findAll();
-        Integer i=new Integer(0);
         it.forEach((n)->{
         if (n.equals(node))
                 assertThat(n.getBattery(),equalTo(87));
         });
-        assertThat(nodeRepo.count(),equalTo(1L));
     }
 
-    @Test
-    @Transactional
-    public void test_create(){
-        SdwnNodeEntity node = new SdwnNodeEntity(34L);
-
-        nodeRepo.create(node,device.getId());
-
-        assertNotNull(node.getId());
-    }
 }

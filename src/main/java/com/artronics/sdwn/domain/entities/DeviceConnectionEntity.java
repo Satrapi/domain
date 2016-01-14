@@ -1,5 +1,7 @@
 package com.artronics.sdwn.domain.entities;
 
+import com.artronics.sdwn.domain.entities.node.SdwnNodeEntity;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -12,13 +14,11 @@ public class DeviceConnectionEntity implements Serializable
 
     private String url;
 
-    private Long sinkAddress;
+    private SdwnNodeEntity sinkNode;
 
     private String description;
 
     private SdwnControllerEntity sdwnController;
-
-//    private List<SdwnNodeEntity> nodes = new ArrayList<>();
 
     protected Date created;
     protected Date updated;
@@ -32,17 +32,17 @@ public class DeviceConnectionEntity implements Serializable
         this.url = url;
     }
 
-    public DeviceConnectionEntity(String url, Long sinkAddress)
+    public DeviceConnectionEntity(String url, SdwnNodeEntity sinkNode)
     {
         this.url = url;
-        this.sinkAddress = sinkAddress;
+        this.sinkNode = sinkNode;
     }
 
-    public DeviceConnectionEntity(Long id, String url, Long sinkAddress)
+    public DeviceConnectionEntity(Long id, String url, SdwnNodeEntity sinkNode)
     {
         this.id = id;
         this.url = url;
-        this.sinkAddress = sinkAddress;
+        this.sinkNode = sinkNode;
     }
     public DeviceConnectionEntity(Long id){
         this.id = id;
@@ -72,15 +72,16 @@ public class DeviceConnectionEntity implements Serializable
         this.url = url;
     }
 
-    @Column(name = "sink_add",nullable = false,unique = false)
-    public Long getSinkAddress()
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "sink_node_id")
+    public SdwnNodeEntity getSinkNode()
     {
-        return sinkAddress;
+        return sinkNode;
     }
 
-    public void setSinkAddress(Long sinkAddress)
+    public void setSinkNode(SdwnNodeEntity sinkNode)
     {
-        this.sinkAddress = sinkAddress;
+        this.sinkNode = sinkNode;
     }
 
     @Column(name = "description")

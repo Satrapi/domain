@@ -102,10 +102,10 @@ public class SeedNetworkGraph
         expiredSession.setStatus(NetworkSession.Status.EXPIRED);
 
         device1.setSdwnController(controller);
-        device1.setSinkAddress(0L);
+        device1.setSinkNode(sink1);
 
         device2.setSdwnController(controller);
-        device2.setSinkAddress(1L);
+        device2.setSinkNode(sink2);
     }
 
     protected void createNodes(NetworkSession session)
