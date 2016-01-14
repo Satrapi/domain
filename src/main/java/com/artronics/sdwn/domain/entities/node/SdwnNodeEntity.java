@@ -39,6 +39,12 @@ public class SdwnNodeEntity implements Node,Serializable
 
         return n;
     }
+    public static SdwnNodeEntity create(Long address){
+        SdwnNodeEntity n = new SdwnNodeEntity();
+        n.setAddress(address);
+
+        return n;
+    }
 
     public SdwnNodeEntity()
     {
