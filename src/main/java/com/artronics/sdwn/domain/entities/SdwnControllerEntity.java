@@ -1,14 +1,11 @@
 package com.artronics.sdwn.domain.entities;
 
-import org.springframework.stereotype.Component;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
 @Entity
 @Table(name="controllers")
-@Component
 public class SdwnControllerEntity implements Serializable
 {
     private Long id;
