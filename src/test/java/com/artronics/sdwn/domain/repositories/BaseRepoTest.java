@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -35,6 +36,7 @@ public class BaseRepoTest
 
     protected SdwnControllerEntity controller;
     protected DeviceConnectionEntity device;
+    protected DeviceConnectionEntity device2;
     protected NetworkSession session;
 
     protected SdwnNodeEntity node0  ;
@@ -66,10 +68,12 @@ public class BaseRepoTest
 
     @Before
     @Transactional
-//    @Rollback(value = false)
+    @Rollback(value = false)
     public void setUp() throws Exception
     {
         device =seeder.getDevice1();
+        device2 =seeder.getDevice2();
+
         session = seeder.getActiveSession();
 
         node0 = seeder.getSink1();

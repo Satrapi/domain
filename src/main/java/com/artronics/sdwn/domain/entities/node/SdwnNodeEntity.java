@@ -4,6 +4,7 @@ import com.artronics.sdwn.domain.entities.DeviceConnectionEntity;
 import com.artronics.sdwn.domain.entities.NetworkSession;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -28,7 +29,7 @@ public class SdwnNodeEntity implements Node,Serializable
     //Normal as default value
     protected Type type = Type.NORMAL;
     protected Status status = Status.ACTIVE;
-    protected int battery;
+    protected Integer battery;
 
     protected Date created;
     protected Date updated;
@@ -104,6 +105,7 @@ public class SdwnNodeEntity implements Node,Serializable
     }
 
     @OneToMany(fetch = FetchType.EAGER,mappedBy = "srcNode",targetEntity = SdwnNeighbor.class)
+    @Cascade(org.hibernate.annotations.CascadeType.PERSIST)
     public List<SdwnNeighbor> getNeighbors()
     {
         return neighbors;
@@ -143,13 +145,13 @@ public class SdwnNodeEntity implements Node,Serializable
         this.status = status;
     }
 
-    @Column(name = "battery")
-    public int getBattery()
+    @Column(name = "battery",updatable = false,insertable = false)
+    public Integer getBattery()
     {
         return battery;
     }
 
-    public void setBattery(int battery)
+    public void setBattery(Integer battery)
     {
         this.battery = battery;
     }
@@ -205,21 +207,6 @@ public class SdwnNodeEntity implements Node,Serializable
         //use getters for getting fields(for ORM) see this SO answer:
         //http://stackoverflow.com/questions/27581/what-issues-should-be-considered-when
         // -overriding-equals-and-hashcode-in-java
-
-//        Long id_l = getDevice().getId() == null ? 0 : getDevice().getId();
-//        Long add_l = getAddress();
-//
-//        int add = (int) (add_l ^ (add_l >>> 32));
-//        int id = (int) (id_l ^ (id_l >>> 32));
-//
-//        final int prime = 31;
-//
-//        int result = 1;
-//
-//        result = prime * result + add;
-//        result = prime * result + id;
-//
-//        return result;
 
         HashCodeBuilder hcb = new HashCodeBuilder();
         hcb.append(this.device);

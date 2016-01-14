@@ -14,6 +14,7 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import java.util.Set;
 
 @Repository
@@ -40,6 +41,23 @@ public class NodeRepoImpl implements NodeCustomRepo
         return node;
     }
 
+    @Override
+    public SdwnNodeEntity update(SdwnNodeEntity node)
+    {
+        Query q = em.createQuery("select n from SdwnNodeEntity n where " +
+                "n.session = ?1 AND "+
+                                         "n.address = ?2 AND " +
+                                         "n.device = ?3 " +
+                                         "order by n.id desc ",SdwnNodeEntity.class);
+
+        q.setParameter(1,session);
+        q.setParameter(2,node.getAddress());
+        q.setParameter(3,node.getDevice());
+
+        SdwnNodeEntity perNode = (SdwnNodeEntity) q.getSingleResult();
+
+        throw new NotImplementedException();
+    }
 
     @Override
     @Transactional

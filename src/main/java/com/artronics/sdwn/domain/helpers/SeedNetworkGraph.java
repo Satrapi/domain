@@ -254,6 +254,11 @@ public class SeedNetworkGraph
         return device1;
     }
 
+    public DeviceConnectionEntity getDevice2()
+    {
+        return device2;
+    }
+
     public SdwnNodeEntity getNode246()
     {
         return node246;
