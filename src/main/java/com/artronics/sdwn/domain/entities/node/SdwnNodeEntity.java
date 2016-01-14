@@ -7,7 +7,9 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "nodes")
@@ -20,6 +22,8 @@ public class SdwnNodeEntity implements Node,Serializable
     protected NetworkSession session;
 
     protected DeviceConnectionEntity device;
+
+    protected List<SdwnNeighbor> neighbors=new ArrayList<>();
 
     //Normal as default value
     protected Type type = Type.NORMAL;
@@ -97,6 +101,22 @@ public class SdwnNodeEntity implements Node,Serializable
     public void setDevice(DeviceConnectionEntity device)
     {
         this.device = device;
+    }
+
+    @OneToMany(fetch = FetchType.EAGER,mappedBy = "srcNode",targetEntity = SdwnNeighbor.class)
+    public List<SdwnNeighbor> getNeighbors()
+    {
+        return neighbors;
+    }
+
+    public void setNeighbors(
+            List<SdwnNeighbor> neighbors)
+    {
+        this.neighbors = neighbors;
+    }
+
+    public void addNeighbor(SdwnNeighbor neighbor){
+        this.neighbors.add(neighbor);
     }
 
     @Enumerated(EnumType.STRING)

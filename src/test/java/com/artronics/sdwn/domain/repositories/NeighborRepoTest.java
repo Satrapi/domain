@@ -4,6 +4,7 @@ import com.artronics.sdwn.domain.entities.node.SdwnNeighbor;
 import com.artronics.sdwn.domain.entities.node.SdwnNodeEntity;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -23,6 +24,7 @@ public class NeighborRepoTest extends BaseRepoTest
 
     @Override
     @Before
+    @Transactional
     public void setUp() throws Exception
     {
         super.setUp();
@@ -40,6 +42,7 @@ public class NeighborRepoTest extends BaseRepoTest
     }
 
     @Test
+    @Transactional
     public void it_should_persist_neighbor(){
         persistNeighbors();
 
@@ -47,6 +50,7 @@ public class NeighborRepoTest extends BaseRepoTest
     }
 
     @Test
+    @Transactional
     public void it_should_getNeighbors(){
         persistNeighbors();
 
@@ -55,6 +59,7 @@ public class NeighborRepoTest extends BaseRepoTest
     }
 
     @Test
+    @Transactional
     public void it_should_EAGERly_load_node(){
         persistNeighbors();
 

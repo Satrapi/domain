@@ -10,9 +10,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -44,6 +44,7 @@ public class BaseRepoTest
     protected SdwnNodeEntity node136;
     protected SdwnNodeEntity node137;
     protected SdwnNodeEntity node245;
+    protected SdwnNodeEntity node246;
 
     @Autowired
     protected SdwnControllerRepo controllerRepo;
@@ -65,10 +66,10 @@ public class BaseRepoTest
 
     @Before
     @Transactional
-    @Rollback(value = false)
+//    @Rollback(value = false)
     public void setUp() throws Exception
     {
-        seeder.seed(true);
+//        seeder.seed(true);
         device =seeder.getDevice1();
         session = seeder.getActiveSession();
 
@@ -82,6 +83,7 @@ public class BaseRepoTest
         node137 = seeder.getNode137();
 
         node245 = seeder.getNode245();
+        node246 = seeder.getNode246();
     }
 
     //    @Ignore("This is a test in RepoBaseTest which should be run for debugging base class")
@@ -94,13 +96,21 @@ public class BaseRepoTest
     @After
     public void after() throws Exception
     {
-//        controllerRepo.deleteAll();
     }
 
     @Configuration
     @Import(RepositoryConfigTest.class)
-    static class BaseRepoConfig{
+    @ComponentScan(basePackages = "com.artronics.sdwn.domain")
+     static class BaseRepoConfig{
 
+//        @Autowired
+//        private SeedNetworkGraph seeder;
+//
+//        @PostConstruct
+//        @Transactional
+//        public void initTests(){
+//            seeder.seed(true);
+//        }
 
 
     }

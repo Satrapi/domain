@@ -3,14 +3,15 @@ package com.artronics.sdwn.domain.helpers;
 import com.artronics.sdwn.domain.entities.DeviceConnectionEntity;
 import com.artronics.sdwn.domain.entities.NetworkSession;
 import com.artronics.sdwn.domain.entities.SdwnControllerEntity;
+import com.artronics.sdwn.domain.entities.node.SdwnNeighbor;
 import com.artronics.sdwn.domain.entities.node.SdwnNodeEntity;
 import com.artronics.sdwn.domain.repositories.*;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-@Component
 
  /*
      Device1
@@ -46,6 +47,7 @@ import org.springframework.transaction.annotation.Transactional;
   */
 
 
+@Component
 public class SeedNetworkGraph
 {
     protected final static Logger log = Logger.getLogger(SeedNetworkGraph.class);
@@ -181,6 +183,24 @@ public class SeedNetworkGraph
     @Transactional
     protected void persistNodeLinks()
     {
+        // node246
+        SdwnNeighbor n246_245 = new SdwnNeighbor(node245,20D,235);
+        SdwnNeighbor n246_30 = new SdwnNeighbor(sameAddNode2,30D,225);
+        n246_245.setSrcNode(node246);
+        n246_30.setSrcNode(node246);
+
+        node246.addNeighbor(n246_245);
+        node246.addNeighbor(n246_30);
+        nodeRepo.persist(node246);
+//        neighborRepo.persist(n246_245);
+//        neighborRepo.persist(n246_30);
+    }
+
+    @Autowired
+    @Qualifier("networkSession")
+    public void setActiveSession(NetworkSession activeSession)
+    {
+        this.activeSession = activeSession;
     }
 
     @Autowired
