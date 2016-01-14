@@ -73,7 +73,7 @@ public class DeviceConnectionEntity implements Serializable
     }
 
     @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "sink_node_id")
+    @JoinColumn(name = "sink_node_id",nullable = true)
     public SdwnNodeEntity getSinkNode()
     {
         return sinkNode;

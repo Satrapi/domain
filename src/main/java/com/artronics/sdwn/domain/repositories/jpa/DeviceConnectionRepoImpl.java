@@ -44,9 +44,10 @@ public class DeviceConnectionRepoImpl implements DeviceConnectionCustomRepo
 
     @Override
     @Transactional
-    public DeviceConnectionEntity create(DeviceConnectionEntity device, Long controllerId)
+    public DeviceConnectionEntity create(DeviceConnectionEntity device,
+                                         SdwnControllerEntity controller)
     {
-        SdwnControllerEntity ctrl = controllerRepo.findOne(controllerId);
+        SdwnControllerEntity ctrl = controllerRepo.findOne(controller.getId());
 
         device.setSdwnController(ctrl);
         em.persist(device);

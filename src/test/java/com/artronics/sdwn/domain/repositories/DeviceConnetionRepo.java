@@ -55,7 +55,7 @@ public class DeviceConnetionRepo extends BaseRepoTest
         controllerRepo.save(controller);
         net.setSdwnController(controller);
 
-        deviceConnectionRepo.create(net, controller.getId());
+        deviceConnectionRepo.create(net, controller);
         assertNotNull(net.getId());
     }
 
@@ -68,7 +68,7 @@ public class DeviceConnetionRepo extends BaseRepoTest
         SdwnControllerEntity newCtrl = EntityFactory.createController("newUrl");
         persistCtrl(newCtrl);
 
-        deviceConnectionRepo.create(net, newCtrl.getId());
+        deviceConnectionRepo.create(net, newCtrl);
 
         DeviceConnectionEntity updatedNet = deviceConnectionRepo.findByUrl("urlForNet");
 
@@ -82,7 +82,7 @@ public class DeviceConnetionRepo extends BaseRepoTest
     }
 
     protected DeviceConnectionEntity persistNet(SdwnControllerEntity ctrl, String netUrl){
-        DeviceConnectionEntity net= deviceConnectionRepo.create(EntityFactory.createSwitchingNet(netUrl), ctrl.getId());
+        DeviceConnectionEntity net= deviceConnectionRepo.create(EntityFactory.createSwitchingNet(netUrl), ctrl);
 
         return net;
     }

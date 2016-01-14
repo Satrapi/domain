@@ -1,10 +1,11 @@
 package com.artronics.sdwn.domain.entities;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "sessions")
-public class NetworkSession
+public class NetworkSession implements Serializable
 {
     private Long id;
 
