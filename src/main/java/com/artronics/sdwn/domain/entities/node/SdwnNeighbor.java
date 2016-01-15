@@ -7,13 +7,14 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 @Entity
 @Table(name = "neighbor")
-public class SdwnNeighbor implements Neighbor<SdwnNodeEntity>
+public class SdwnNeighbor implements Neighbor<SdwnNodeEntity>,Serializable
 {
     public final static int NEIGHBOR_INDEX=13;
 
