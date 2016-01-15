@@ -24,20 +24,38 @@ public class SessionRepoImpl implements SessionCustomRepo
     private SdwnControllerRepo controllerRepo;
 
     @Override
+    public NetworkSession findActiveSession()
+    {
+        List<NetworkSession> s = findSession(NetworkSession.Status.ACTIVE);
+
+        if (s.isEmpty())
+            return null;
+
+        return s.get(0);
+    }
+
+    @Override
     @Transactional
     public void expire()
     {
-        Query q = em.createQuery("select s from NetworkSession s  where " +
-                                         "s.status = ?1 " +
-                                         "order by s.id DESC ");
+        List<NetworkSession> s = findSession(NetworkSession.Status.ACTIVE);
 
-        q.setParameter(1, NetworkSession.Status.ACTIVE);
-
-        List<NetworkSession> s =(List<NetworkSession>) q.getResultList();
         s.forEach(session -> {
             session.setStatus(NetworkSession.Status.EXPIRED);
             em.persist(session);
         });
+    }
+
+    private List<NetworkSession> findSession(NetworkSession.Status status){
+        Query q = em.createQuery("select s from NetworkSession s  where " +
+                                         "s.status = ?1 " +
+                                         "order by s.id DESC ");
+
+        q.setParameter(1, status);
+
+        List<NetworkSession> s =(List<NetworkSession>) q.getResultList();
+
+        return s;
     }
 
 }

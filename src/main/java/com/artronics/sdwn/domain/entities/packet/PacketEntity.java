@@ -15,8 +15,6 @@ public class PacketEntity implements Packet, Serializable
 {
     private Long id;
 
-    private DeviceConnectionEntity device;
-
     private NetworkSession session;
 
     private SdwnNodeEntity srcNode;
@@ -48,8 +46,6 @@ public class PacketEntity implements Packet, Serializable
         PacketEntity packet = new PacketEntity();
 
         packet.content = content;
-
-        packet.setDevice(device);
 
         packet.srcShortAdd = SdwnPacketHelper.getSourceAddress(content);
         packet.dstShortAdd = SdwnPacketHelper.getDestinationAddress(content);
@@ -114,18 +110,6 @@ public class PacketEntity implements Packet, Serializable
     public void setDstNode(SdwnNodeEntity dstNode)
     {
         this.dstNode = dstNode;
-    }
-
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
-    @JoinColumn(name = "device_id", nullable = false)
-    public DeviceConnectionEntity getDevice()
-    {
-        return device;
-    }
-
-    public void setDevice(DeviceConnectionEntity device)
-    {
-        this.device = device;
     }
 
     @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.MERGE)

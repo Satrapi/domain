@@ -4,13 +4,10 @@ import com.artronics.sdwn.domain.entities.DeviceConnectionEntity;
 import com.artronics.sdwn.domain.entities.NetworkSession;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 @Entity
 @Table(name = "nodes")
@@ -24,7 +21,7 @@ public class SdwnNodeEntity implements Node,Serializable
 
     protected DeviceConnectionEntity device;
 
-    protected List<SdwnNeighbor> neighbors=new ArrayList<>();
+//    protected List<SdwnNeighbor> neighbors=new ArrayList<>();
 
     //Normal as default value
     protected Type type = Type.NORMAL;
@@ -86,7 +83,7 @@ public class SdwnNodeEntity implements Node,Serializable
         this.address = address;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinColumn(name = "session_id", nullable = false)
     public NetworkSession getSession()
     {
@@ -110,22 +107,22 @@ public class SdwnNodeEntity implements Node,Serializable
         this.device = device;
     }
 
-    @OneToMany(fetch = FetchType.EAGER,mappedBy = "srcNode",targetEntity = SdwnNeighbor.class)
-    @Cascade(org.hibernate.annotations.CascadeType.PERSIST)
-    public List<SdwnNeighbor> getNeighbors()
-    {
-        return neighbors;
-    }
-
-    public void setNeighbors(
-            List<SdwnNeighbor> neighbors)
-    {
-        this.neighbors = neighbors;
-    }
-
-    public void addNeighbor(SdwnNeighbor neighbor){
-        this.neighbors.add(neighbor);
-    }
+//    @OneToMany(fetch = FetchType.EAGER,mappedBy = "srcNode",targetEntity = SdwnNeighbor.class)
+//    @Cascade(org.hibernate.annotations.CascadeType.PERSIST)
+//    public List<SdwnNeighbor> getNeighbors()
+//    {
+//        return neighbors;
+//    }
+//
+//    public void setNeighbors(
+//            List<SdwnNeighbor> neighbors)
+//    {
+//        this.neighbors = neighbors;
+//    }
+//
+//    public void addNeighbor(SdwnNeighbor neighbor){
+//        this.neighbors.add(neighbor);
+//    }
 
     @Enumerated(EnumType.STRING)
     @Column(name = "type", nullable = false)

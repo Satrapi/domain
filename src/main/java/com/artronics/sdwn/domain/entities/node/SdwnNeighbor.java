@@ -71,7 +71,7 @@ public class SdwnNeighbor implements Neighbor<SdwnNodeEntity>,Serializable
             int add = SdwnPacketHelper.joinAddresses(contents.get(i),
                                                      contents.get(i + 1));
             int rssi = contents.get(i + 2);
-            SdwnNodeEntity node = new SdwnNodeEntity(Integer.toUnsignedLong(add),packet.getDevice());
+            SdwnNodeEntity node = new SdwnNodeEntity(Integer.toUnsignedLong(add));
             node.setStatus(SdwnNodeEntity.Status.IDLE);
             SdwnNeighbor neighbor = new SdwnNeighbor(node,rssi);
             neighbors.add(neighbor);

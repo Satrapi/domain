@@ -108,18 +108,6 @@ public class DeviceConnectionEntity implements Serializable
         this.sdwnController = sdwnController;
     }
 
-//    @Fetch(FetchMode.SUBSELECT)
-//    @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-//    public List<SdwnNodeEntity> getNodes()
-//    {
-//        return nodes;
-//    }
-//
-//    public void setNodes(List<SdwnNodeEntity> nodes)
-//    {
-//        this.nodes = nodes;
-//    }
-
     public Date getCreated()
     {
         return created;

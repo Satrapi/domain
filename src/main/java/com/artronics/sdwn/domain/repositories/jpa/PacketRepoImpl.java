@@ -1,6 +1,5 @@
 package com.artronics.sdwn.domain.repositories.jpa;
 
-import com.artronics.sdwn.domain.entities.DeviceConnectionEntity;
 import com.artronics.sdwn.domain.entities.NetworkSession;
 import com.artronics.sdwn.domain.entities.packet.PacketEntity;
 import com.artronics.sdwn.domain.repositories.DeviceConnectionRepo;
@@ -41,10 +40,6 @@ public class PacketRepoImpl implements PacketCustomRepo
     @Transactional
     public PacketEntity create(PacketEntity packet, Long deviceId)
     {
-        DeviceConnectionEntity device = deviceRepo.findOne(deviceId);
-
-        packet.setDevice(device);
-
         em.persist(packet);
 
         return packet;

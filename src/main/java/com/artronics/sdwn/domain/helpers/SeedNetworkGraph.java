@@ -6,6 +6,7 @@ import com.artronics.sdwn.domain.entities.SdwnControllerEntity;
 import com.artronics.sdwn.domain.entities.node.SdwnNeighbor;
 import com.artronics.sdwn.domain.entities.node.SdwnNodeEntity;
 import com.artronics.sdwn.domain.repositories.*;
+import jdk.nashorn.internal.ir.annotations.Ignore;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -180,6 +181,7 @@ public class SeedNetworkGraph
         nodeRepo.save(node246);
     }
 
+    @Ignore
     @Transactional
     protected void persistNodeLinks()
     {
@@ -189,8 +191,8 @@ public class SeedNetworkGraph
         n246_245.setSrcNode(node246);
         n246_30.setSrcNode(node246);
 
-        node246.addNeighbor(n246_245);
-        node246.addNeighbor(n246_30);
+//        node246.addNeighbor(n246_245);
+//        node246.addNeighbor(n246_30);
         nodeRepo.persist(node246);
 //        neighborRepo.persist(n246_245);
 //        neighborRepo.persist(n246_30);

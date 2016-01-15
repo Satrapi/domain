@@ -41,4 +41,10 @@ public class NetworkSession implements Serializable
         ACTIVE,
         EXPIRED
     }
+
+    @Override
+    public String toString()
+    {
+        return "NetworkSession " + getId()==null? "": ("-> ID: "+getId());
+    }
 }

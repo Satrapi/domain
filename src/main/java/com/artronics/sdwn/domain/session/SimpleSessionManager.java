@@ -17,9 +17,17 @@ public class SimpleSessionManager implements SessionManager,DisposableBean
     @Override
     public NetworkSession open()
     {
-        NetworkSession s = new NetworkSession();
-        sessionRepo.save(s);
-        log.debug("Creating new NetwrokSession-> ID: " +s.getId());
+        NetworkSession s = sessionRepo.findActiveSession();
+        if (s == null) {
+            s = new NetworkSession();
+            sessionRepo.save(s);
+
+            log.debug("New session has been created." +s.getId());
+
+            return s;
+        }
+
+        log.debug("Found active session. "+s);
 
         return s;
     }
