@@ -10,21 +10,16 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
-@Table(name = "neighbor")
+@Embeddable
 public class SdwnNeighbor implements Neighbor<SdwnNodeEntity>,Serializable
 {
     public final static int NEIGHBOR_INDEX=13;
-
-    private Long id;
 
     private SdwnNodeEntity node;
 
     private Integer rssi;
 
     private Double weight;
-
-    private SdwnReportPacket reportPacket;
 
     public SdwnNeighbor()
     {
@@ -79,19 +74,6 @@ public class SdwnNeighbor implements Neighbor<SdwnNodeEntity>,Serializable
         return createNeighbors(content);
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false, unique = true)
-    public Long getId()
-    {
-        return id;
-    }
-
-    public void setId(Long id)
-    {
-        this.id = id;
-    }
-
     @Override
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "node_id")
@@ -126,18 +108,6 @@ public class SdwnNeighbor implements Neighbor<SdwnNodeEntity>,Serializable
     public void setRssi(Integer rssi)
     {
         this.rssi = rssi;
-    }
-
-    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-    @JoinColumn(name = "report_id",nullable = false)
-    public SdwnReportPacket getReportPacket()
-    {
-        return reportPacket;
-    }
-
-    public void setReportPacket(SdwnReportPacket reportPacket)
-    {
-        this.reportPacket = reportPacket;
     }
 
     @Override

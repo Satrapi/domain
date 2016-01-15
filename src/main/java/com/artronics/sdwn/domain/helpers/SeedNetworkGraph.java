@@ -5,7 +5,10 @@ import com.artronics.sdwn.domain.entities.NetworkSession;
 import com.artronics.sdwn.domain.entities.SdwnControllerEntity;
 import com.artronics.sdwn.domain.entities.node.SdwnNeighbor;
 import com.artronics.sdwn.domain.entities.node.SdwnNodeEntity;
-import com.artronics.sdwn.domain.repositories.*;
+import com.artronics.sdwn.domain.repositories.DeviceConnectionRepo;
+import com.artronics.sdwn.domain.repositories.NodeRepo;
+import com.artronics.sdwn.domain.repositories.SdwnControllerRepo;
+import com.artronics.sdwn.domain.repositories.SessionRepo;
 import jdk.nashorn.internal.ir.annotations.Ignore;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,7 +80,7 @@ public class SeedNetworkGraph
     protected SdwnControllerRepo controllerRepo;
     protected DeviceConnectionRepo deviceRepo;
     protected NodeRepo nodeRepo;
-    protected NeighborRepo neighborRepo;
+//    protected NeighborRepo neighborRepo;
 
     protected boolean persist = false;
 
@@ -228,11 +231,11 @@ public class SeedNetworkGraph
         this.deviceRepo = deviceRepo;
     }
 
-    @Autowired
-    public void setNeighborRepo(NeighborRepo neighborRepo)
-    {
-        this.neighborRepo = neighborRepo;
-    }
+//    @Autowired
+//    public void setNeighborRepo(NeighborRepo neighborRepo)
+//    {
+//        this.neighborRepo = neighborRepo;
+//    }
 
     public NetworkSession getActiveSession()
     {

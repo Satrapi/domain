@@ -2,7 +2,6 @@ package com.artronics.sdwn.domain.entities.packet;
 
 import com.artronics.sdwn.domain.entities.node.SdwnNeighbor;
 import org.apache.log4j.Logger;
-import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -28,13 +27,13 @@ public class SdwnReportPacket extends PacketEntity
         super(content);
 
         this.neighbors = SdwnNeighbor.createNeighbors(content);
-        this.neighbors.forEach(neighbor -> neighbor.setReportPacket(this));
 
         this.battery = SdwnPacketHelper.getBattery(content);
     }
 
-    @OneToMany(fetch = FetchType.EAGER)//,mappedBy = "reportPacket")
-    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    @Embedded
+    @ElementCollection
+    @CollectionTable(name = "neighbors",joinColumns = {@JoinColumn(name = "rep_packet_id")})
     public List<SdwnNeighbor> getNeighbors()
     {
         return neighbors;
