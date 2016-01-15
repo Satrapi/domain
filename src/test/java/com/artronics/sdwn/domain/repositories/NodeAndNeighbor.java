@@ -6,9 +6,6 @@ import org.junit.Test;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
-import static org.hamcrest.core.IsEqual.equalTo;
-import static org.junit.Assert.assertThat;
-
 public class NodeAndNeighbor extends BaseRepoTest
 {
     @Test
@@ -28,11 +25,9 @@ public class NodeAndNeighbor extends BaseRepoTest
     @Ignore
     public void it(){
         SdwnNodeEntity node = new SdwnNodeEntity(246L,device2);
-        node.setBattery(23);
         nodeRepo.update(node);
 
         SdwnNodeEntity persistedNode = nodeRepo.findOne(node246.getId());
-        assertThat(persistedNode.getBattery(),equalTo(23));
 
 //        List<SdwnNeighbor> n = persistedNode.getNeighbors();
 //        assertThat(n.size(),equalTo(2));

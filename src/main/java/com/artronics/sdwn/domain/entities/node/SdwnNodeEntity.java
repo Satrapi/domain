@@ -11,6 +11,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "nodes")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class SdwnNodeEntity implements Node,Serializable
 {
     protected Long id;
@@ -26,7 +27,6 @@ public class SdwnNodeEntity implements Node,Serializable
     //Normal as default value
     protected Type type = Type.NORMAL;
     protected Status status = Status.IDLE;
-    protected Integer battery;
 
     protected Date created;
     protected Date updated;
@@ -146,17 +146,6 @@ public class SdwnNodeEntity implements Node,Serializable
     public void setStatus(Status status)
     {
         this.status = status;
-    }
-
-    @Column(name = "battery",updatable = false,insertable = false)
-    public Integer getBattery()
-    {
-        return battery;
-    }
-
-    public void setBattery(Integer battery)
-    {
-        this.battery = battery;
     }
 
     public Date getCreated()

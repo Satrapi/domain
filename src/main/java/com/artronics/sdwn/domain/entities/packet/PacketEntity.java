@@ -23,17 +23,15 @@ public class PacketEntity implements Packet, Serializable
 
     private List<Integer> content;
 
-    private List<Integer> payload;
+//    private List<Integer> payload;
+
+    private Packet.Type type;
 
     private Packet.Direction dir;
 
     private int len;
+
     private int netId;
-
-    private int srcShortAdd;
-    private int dstShortAdd;
-
-    private Packet.Type type;
 
     private int nextHop;
 
@@ -41,35 +39,32 @@ public class PacketEntity implements Packet, Serializable
     {
     }
 
-    public static PacketEntity create(List<Integer> content,DeviceConnectionEntity device)
+    public PacketEntity(List<Integer> content)
+    {
+        this.content = content;
+
+        Long srcShortAdd =Integer.toUnsignedLong(SdwnPacketHelper.getSourceAddress(content));
+        Long dstShortAdd =Integer.toUnsignedLong(SdwnPacketHelper.getDestinationAddress(content));
+
+        SdwnNodeEntity src =  SdwnNodeEntity.create(srcShortAdd);
+        SdwnNodeEntity dst =  SdwnNodeEntity.create(dstShortAdd);
+        this.srcNode = src;
+        this.dstNode = dst;
+
+        this.type = SdwnPacketHelper.getType(content);
+
+        this.dir = Packet.Direction.RX;
+
+        this.len = SdwnPacketHelper.getSize(content);
+        this.netId = SdwnPacketHelper.getNetId(content);
+        this.nextHop = SdwnPacketHelper.getNextHopAddress(content);
+    }
+
+    public static PacketEntity create(List<Integer> content, DeviceConnectionEntity device)
     {
         PacketEntity packet = new PacketEntity();
 
         packet.content = content;
-
-        packet.srcShortAdd = SdwnPacketHelper.getSourceAddress(content);
-        packet.dstShortAdd = SdwnPacketHelper.getDestinationAddress(content);
-
-        SdwnNodeEntity src =  SdwnNodeEntity.create(Integer.toUnsignedLong(packet.srcShortAdd),device);
-        SdwnNodeEntity dst =  SdwnNodeEntity.create(Integer.toUnsignedLong(packet.dstShortAdd),device);
-        packet.srcNode = src;
-        packet.dstNode = dst;
-
-        packet.type = SdwnPacketHelper.getType(content);
-        if (packet.type == Type.REPORT) {
-            packet.srcNode.setBattery(SdwnPacketHelper.getBattery(content));
-        }
-
-        packet.payload = SdwnPacketHelper.getPayload(content);
-
-        packet.dir = Packet.Direction.RX;
-
-        packet.len = SdwnPacketHelper.getSize(content);
-        packet.netId = SdwnPacketHelper.getNetId(content);
-
-
-
-        packet.nextHop = SdwnPacketHelper.getNextHopAddress(content);
 
         return packet;
     }
@@ -85,6 +80,21 @@ public class PacketEntity implements Packet, Serializable
     public void setId(Long id)
     {
         this.id = id;
+    }
+
+    @Override
+    @ElementCollection(fetch = FetchType.EAGER)
+//    @CollectionType(type = "java.util.ArrayList")
+    @CollectionTable(name = "packet_content", joinColumns = @JoinColumn(name = "id"))
+    @Column(name = "content")
+    public List<Integer> getContent()
+    {
+        return content;
+    }
+
+    public void setContent(List<Integer> content)
+    {
+        this.content = content;
     }
 
     @OneToOne(fetch = FetchType.EAGER)
@@ -124,19 +134,19 @@ public class PacketEntity implements Packet, Serializable
         this.session = session;
     }
 
-    @ElementCollection(fetch = FetchType.EAGER)
-//    @CollectionType(type = "java.util.ArrayList")
-    @CollectionTable(name = "packet_payload", joinColumns = @JoinColumn(name = "id"))
-    @Column(name = "payload")
-    public List<Integer> getPayload()
-    {
-        return payload;
-    }
-
-    public void setPayload(List<Integer> payload)
-    {
-        this.payload = payload;
-    }
+//    @ElementCollection(fetch = FetchType.EAGER)
+////    @CollectionType(type = "java.util.ArrayList")
+//    @CollectionTable(name = "packet_payload", joinColumns = @JoinColumn(name = "id"))
+//    @Column(name = "payload")
+//    public List<Integer> getPayload()
+//    {
+//        return payload;
+//    }
+//
+//    public void setPayload(List<Integer> payload)
+//    {
+//        this.payload = payload;
+//    }
 
     @Enumerated(EnumType.STRING)
     public Direction getDir()
@@ -169,26 +179,6 @@ public class PacketEntity implements Packet, Serializable
         this.netId = netId;
     }
 
-    public int getSrcShortAdd()
-    {
-        return srcShortAdd;
-    }
-
-    public void setSrcShortAdd(int srcShortAdd)
-    {
-        this.srcShortAdd = srcShortAdd;
-    }
-
-    public int getDstShortAdd()
-    {
-        return dstShortAdd;
-    }
-
-    public void setDstShortAdd(int dstShortAdd)
-    {
-        this.dstShortAdd = dstShortAdd;
-    }
-
     @Enumerated(EnumType.STRING)
     public Type getType()
     {
@@ -210,10 +200,4 @@ public class PacketEntity implements Packet, Serializable
         this.nextHop = nextHop;
     }
 
-    @Override
-    @Transient
-    public List<Integer> getContent()
-    {
-        return content;
-    }
 }
