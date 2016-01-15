@@ -11,6 +11,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "packets")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class PacketEntity implements Packet, Serializable
 {
     private Long id;
@@ -22,8 +23,6 @@ public class PacketEntity implements Packet, Serializable
     private SdwnNodeEntity dstNode;
 
     private List<Integer> content;
-
-//    private List<Integer> payload;
 
     private Packet.Type type;
 
@@ -133,20 +132,6 @@ public class PacketEntity implements Packet, Serializable
     {
         this.session = session;
     }
-
-//    @ElementCollection(fetch = FetchType.EAGER)
-////    @CollectionType(type = "java.util.ArrayList")
-//    @CollectionTable(name = "packet_payload", joinColumns = @JoinColumn(name = "id"))
-//    @Column(name = "payload")
-//    public List<Integer> getPayload()
-//    {
-//        return payload;
-//    }
-//
-//    public void setPayload(List<Integer> payload)
-//    {
-//        this.payload = payload;
-//    }
 
     @Enumerated(EnumType.STRING)
     public Direction getDir()

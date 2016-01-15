@@ -10,7 +10,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "reports")
-@PrimaryKeyJoinColumn(name = "report_id")
+@PrimaryKeyJoinColumn(name = "id")
 public class SdwnReportPacket extends PacketEntity
 {
     private final static Logger log = Logger.getLogger(SdwnReportPacket.class);
@@ -27,10 +27,13 @@ public class SdwnReportPacket extends PacketEntity
     {
         super(content);
 
+        this.neighbors = SdwnNeighbor.createNeighbors(content);
+        this.neighbors.forEach(neighbor -> neighbor.setReportPacket(this));
+
         this.battery = SdwnPacketHelper.getBattery(content);
     }
 
-    @OneToMany(fetch = FetchType.EAGER,mappedBy = "reportPacket")
+    @OneToMany(fetch = FetchType.EAGER)//,mappedBy = "reportPacket")
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
     public List<SdwnNeighbor> getNeighbors()
     {

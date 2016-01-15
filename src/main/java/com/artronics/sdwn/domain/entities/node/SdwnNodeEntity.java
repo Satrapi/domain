@@ -11,7 +11,6 @@ import java.util.Date;
 
 @Entity
 @Table(name = "nodes")
-@Inheritance(strategy = InheritanceType.JOINED)
 public class SdwnNodeEntity implements Node,Serializable
 {
     protected Long id;

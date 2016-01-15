@@ -1,7 +1,5 @@
 package com.artronics.sdwn.domain.entities.node;
 
-import com.artronics.sdwn.domain.entities.packet.Packet;
-import com.artronics.sdwn.domain.entities.packet.PacketEntity;
 import com.artronics.sdwn.domain.entities.packet.SdwnPacketHelper;
 import com.artronics.sdwn.domain.entities.packet.SdwnReportPacket;
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -9,9 +7,8 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "neighbor")
@@ -60,25 +57,26 @@ public class SdwnNeighbor implements Neighbor<SdwnNodeEntity>,Serializable
         this.weight = weight;
     }
 
-    public static Set<SdwnNeighbor> createNeighbors(PacketEntity packet)
-    {
-        if (packet.getType()!= Packet.Type.REPORT)
-            throw new IllegalArgumentException("Packet must be of type:" + Packet.Type.REPORT);
+    public static List<SdwnNeighbor> createNeighbors(List<Integer> content){
+        List<SdwnNeighbor> neighbors = new ArrayList<>();
 
-        Set<SdwnNeighbor> neighbors = new HashSet<>();
-        List<Integer> contents = packet.getContent();
-
-        for (int i = NEIGHBOR_INDEX; i < contents.size(); i += 3) {
-            int add = SdwnPacketHelper.joinAddresses(contents.get(i),
-                                                     contents.get(i + 1));
-            int rssi = contents.get(i + 2);
+        for (int i = NEIGHBOR_INDEX; i < content.size(); i += 3) {
+            int add = SdwnPacketHelper.joinAddresses(content.get(i),
+                                                     content.get(i + 1));
+            int rssi = content.get(i + 2);
             SdwnNodeEntity node = new SdwnNodeEntity(Integer.toUnsignedLong(add));
-            node.setStatus(SdwnNodeEntity.Status.IDLE);
             SdwnNeighbor neighbor = new SdwnNeighbor(node,rssi);
             neighbors.add(neighbor);
         }
 
         return neighbors;
+    }
+
+    public static List<SdwnNeighbor> createNeighbors(SdwnReportPacket packet)
+    {
+        List<Integer> content = packet.getContent();
+
+        return createNeighbors(content);
     }
 
     @Id
@@ -130,7 +128,7 @@ public class SdwnNeighbor implements Neighbor<SdwnNodeEntity>,Serializable
         this.rssi = rssi;
     }
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @JoinColumn(name = "report_id",nullable = false)
     public SdwnReportPacket getReportPacket()
     {
