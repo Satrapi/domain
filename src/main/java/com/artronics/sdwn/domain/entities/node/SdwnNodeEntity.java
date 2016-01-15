@@ -25,7 +25,7 @@ public class SdwnNodeEntity implements Node,Serializable
 
     //Normal as default value
     protected Type type = Type.NORMAL;
-    protected Status status = Status.ACTIVE;
+    protected Status status = Status.IDLE;
     protected Integer battery;
 
     protected Date created;
