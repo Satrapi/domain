@@ -189,7 +189,7 @@ public class SdwnNodeEntity implements Node,Serializable
     {
         IDLE,
         ACTIVE,
-        DISABLE,
+        DISABLE, ISLAND,
     }
 
     @Override
