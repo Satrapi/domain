@@ -42,6 +42,16 @@ public class NodeRepoImpl implements NodeCustomRepo
     }
 
     @Override
+    @Transactional
+    public SdwnNodeEntity merge(SdwnNodeEntity node)
+    {
+        node.setSession(session);
+        em.merge(node);
+
+        return node;
+    }
+
+    @Override
     public SdwnNodeEntity update(SdwnNodeEntity node)
     {
         Query q = em.createQuery("select n from SdwnNodeEntity n where " +

@@ -10,6 +10,8 @@ public interface NodeCustomRepo
 {
     SdwnNodeEntity persist(SdwnNodeEntity node);
 
+    SdwnNodeEntity merge(SdwnNodeEntity node);
+
     SdwnNodeEntity update(SdwnNodeEntity node);
 
     SdwnNodeEntity create(SdwnNodeEntity node,Long deviceId);
