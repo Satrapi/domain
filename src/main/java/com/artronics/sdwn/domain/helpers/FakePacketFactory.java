@@ -1,9 +1,9 @@
 package com.artronics.sdwn.domain.helpers;
 
 
-import com.artronics.sdwn.domain.entities.packet.Packet;
-import com.artronics.sdwn.domain.entities.packet.PacketEntity;
-import com.artronics.sdwn.domain.entities.packet.SdwnPacketHelper;
+import com.artronics.sdwn.domain.entities.node.SdwnNeighbor;
+import com.artronics.sdwn.domain.entities.node.SdwnNodeEntity;
+import com.artronics.sdwn.domain.entities.packet.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,6 +19,8 @@ public class FakePacketFactory
 {
     List<Integer> packet = new ArrayList<>();
     List<Integer> header = new ArrayList<>();
+
+    PacketFactory packetFactory = new SdwnPacketFactory();
 
     private List<Integer> createHeader()
     {
@@ -48,6 +50,20 @@ public class FakePacketFactory
     public PacketEntity createReportPacket()
     {
         return PacketEntity.create(createRawReportPacket(),null);
+    }
+
+    public SdwnReportPacket createReportPacket(SdwnNodeEntity src,SdwnNodeEntity dst, SdwnNodeEntity... neighbors){
+        SdwnReportPacket packet = new SdwnReportPacket();
+        packet.setSrcNode(src);
+        packet.setDstNode(dst);
+        List<SdwnNeighbor> ns= new ArrayList<>();
+        for (SdwnNodeEntity neighbor : neighbors) {
+            SdwnNeighbor n = new SdwnNeighbor(src,100D,100);
+            ns.add(n);
+        }
+        packet.setNeighbors(ns);
+
+        return packet;
     }
 
     public PacketEntity createReportPacket(int src, int dst, int dis, int bat, List<Integer> neighbors)
