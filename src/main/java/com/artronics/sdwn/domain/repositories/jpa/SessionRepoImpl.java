@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import java.util.List;
 
 @Repository
 public class SessionRepoImpl implements SessionCustomRepo
@@ -26,14 +27,17 @@ public class SessionRepoImpl implements SessionCustomRepo
     @Transactional
     public void expire()
     {
-        Query q = em.createQuery("from com.artronics.sdwn.domain.entities.NetworkSession s  where " +
-                                         "s.status = ?1");
+        Query q = em.createQuery("select s from NetworkSession s  where " +
+                                         "s.status = ?1 " +
+                                         "order by s.id DESC ");
 
         q.setParameter(1, NetworkSession.Status.ACTIVE);
 
-        NetworkSession s =(NetworkSession) q.getSingleResult();
-        s.setStatus(NetworkSession.Status.EXPIRED);
-
-        em.persist(s);
+        List<NetworkSession> s =(List<NetworkSession>) q.getResultList();
+        s.forEach(session -> {
+            session.setStatus(NetworkSession.Status.EXPIRED);
+            em.persist(session);
+        });
     }
+
 }

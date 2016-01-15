@@ -27,14 +27,11 @@ public class SimpleSessionManager implements SessionManager,DisposableBean
     @Override
     public void close() throws Exception
     {
-        destroy();
     }
 
     @Override
     public void destroy() throws Exception
     {
-        log.debug("Expiring NetworkSession.");
-        sessionRepo.expire();
     }
 
     @Autowired
