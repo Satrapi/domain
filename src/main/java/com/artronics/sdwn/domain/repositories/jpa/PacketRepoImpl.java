@@ -28,6 +28,7 @@ public class PacketRepoImpl implements PacketCustomRepo
 
 
     @Override
+    @Transactional
     public PacketEntity persist(PacketEntity packet)
     {
         packet.setSession(session);
