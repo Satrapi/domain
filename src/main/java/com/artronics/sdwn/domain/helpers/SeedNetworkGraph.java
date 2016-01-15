@@ -188,8 +188,6 @@ public class SeedNetworkGraph
         // node246
         SdwnNeighbor n246_245 = new SdwnNeighbor(node245,20D,235);
         SdwnNeighbor n246_30 = new SdwnNeighbor(sameAddNode2,30D,225);
-        n246_245.setSrcNode(node246);
-        n246_30.setSrcNode(node246);
 
 //        node246.addNeighbor(n246_245);
 //        node246.addNeighbor(n246_30);

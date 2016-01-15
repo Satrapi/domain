@@ -3,6 +3,7 @@ package com.artronics.sdwn.domain.entities.node;
 import com.artronics.sdwn.domain.entities.packet.Packet;
 import com.artronics.sdwn.domain.entities.packet.PacketEntity;
 import com.artronics.sdwn.domain.entities.packet.SdwnPacketHelper;
+import com.artronics.sdwn.domain.entities.packet.SdwnReportPacket;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -26,7 +27,7 @@ public class SdwnNeighbor implements Neighbor<SdwnNodeEntity>,Serializable
 
     private Double weight;
 
-    private SdwnNodeEntity srcNode;
+    private SdwnReportPacket reportPacket;
 
     public SdwnNeighbor()
     {
@@ -129,16 +130,16 @@ public class SdwnNeighbor implements Neighbor<SdwnNodeEntity>,Serializable
         this.rssi = rssi;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "src_node_id",nullable = false)
-    public SdwnNodeEntity getSrcNode()
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "report_id",nullable = false)
+    public SdwnReportPacket getReportPacket()
     {
-        return srcNode;
+        return reportPacket;
     }
 
-    public void setSrcNode(SdwnNodeEntity srcNode)
+    public void setReportPacket(SdwnReportPacket reportPacket)
     {
-        this.srcNode = srcNode;
+        this.reportPacket = reportPacket;
     }
 
     @Override
