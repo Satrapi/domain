@@ -20,6 +20,7 @@ import static com.artronics.sdwn.domain.entities.packet.Packet.Type.*;
  */
 public class FakePacketFactory
 {
+    public static final Double WEIGHT = 113D;
     List<Integer> packet = new ArrayList<>();
     List<Integer> header = new ArrayList<>();
 
@@ -66,7 +67,7 @@ public class FakePacketFactory
         for (Long a:add){
             SdwnNodeEntity n = new SdwnNodeEntity(a,device);
             n.setId(a);
-            SdwnNeighbor ni = new SdwnNeighbor(n,100D,100);
+            SdwnNeighbor ni = new SdwnNeighbor(n,WEIGHT,255-WEIGHT.intValue());
             ns.add(ni);
         }
         packet.setNeighbors(ns);
@@ -84,7 +85,7 @@ public class FakePacketFactory
         for (SdwnNodeEntity node:nodes){
             node.setDevice(device);
             node.setId(node.getAddress());
-            SdwnNeighbor ni = new SdwnNeighbor(node,100D,100);
+            SdwnNeighbor ni = new SdwnNeighbor(node,WEIGHT,255-WEIGHT.intValue());
             ns.add(ni);
         }
         packet.setNeighbors(ns);
