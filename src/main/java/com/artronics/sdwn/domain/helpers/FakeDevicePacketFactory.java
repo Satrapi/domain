@@ -1,6 +1,5 @@
 package com.artronics.sdwn.domain.helpers;
 
-import com.artronics.sdwn.domain.entities.DeviceConnectionEntity;
 import com.artronics.sdwn.domain.entities.node.SdwnNeighbor;
 import com.artronics.sdwn.domain.entities.node.SdwnNodeEntity;
 import com.artronics.sdwn.domain.entities.packet.Packet;
@@ -18,14 +17,25 @@ public class FakeDevicePacketFactory
     private final static Logger log = Logger.getLogger(FakeDevicePacketFactory.class);
 
     public SdwnReportPacket createReportPacket(Long packetId, SdwnNodeEntity src,
-                                               SdwnNodeEntity dst, DeviceConnectionEntity device,
-                                               Long... add)
+                                               SdwnNodeEntity dst, Long... add)
     {
         SdwnReportPacket packet = new SdwnReportPacket();
 
         setSrcDstNodes(src, dst,packet, Packet.Type.REPORT,packetId);
 
         packet.setNeighbors(createDeviceNeighbors(add));
+
+        return packet;
+    }
+
+    public SdwnReportPacket createReportPacket(Long packetId, SdwnNodeEntity src,
+                                               SdwnNodeEntity dst, SdwnNodeEntity... nodes)
+    {
+        SdwnReportPacket packet = new SdwnReportPacket();
+
+        setSrcDstNodes(src, dst,packet, Packet.Type.REPORT,packetId);
+
+        packet.setNeighbors(createDeviceNeighbors(nodes));
 
         return packet;
     }
@@ -41,10 +51,21 @@ public class FakeDevicePacketFactory
         return neighbors;
     }
 
+    public static List<SdwnNeighbor> createDeviceNeighbors(SdwnNodeEntity... nodes){
+        List<SdwnNeighbor> neighbors= new ArrayList<>();
+        for (SdwnNodeEntity node : nodes) {
+            SdwnNeighbor ni = new SdwnNeighbor(node, WEIGHT, 255-WEIGHT.intValue());
+            neighbors.add(ni);
+        }
+
+        return neighbors;
+    }
     public PacketEntity setSrcDstNodes(SdwnNodeEntity src, SdwnNodeEntity dst,
                                        PacketEntity packet, Packet.Type type,Long packetId){
         packet.setId(packetId);
         packet.setType(type);
+        packet.setSrcNode(src);
+        packet.setDstNode(dst);
 
         return packet;
     }
