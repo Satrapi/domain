@@ -2,13 +2,15 @@ package com.artronics.sdwn.domain.helpers;
 
 import com.artronics.sdwn.domain.entities.node.SdwnNodeEntity;
 import com.artronics.sdwn.domain.entities.packet.SdwnReportPacket;
-import org.apache.log4j.Logger;
+import com.artronics.sdwn.domain.log.PacketLogger;
+import com.artronics.sdwn.domain.log.PacketLoggerImpl;
 import org.junit.Before;
 import org.junit.Test;
 
 public class PrintHelperTest
 {
-    private Logger log = Logger.getLogger(PrintHelperTest.class);
+    PacketLogger logger = new PacketLoggerImpl();
+
     protected static final PrintHelper printer = new PrintHelper();
     FakePacketFactory f = new FakePacketFactory();
 
@@ -35,5 +37,10 @@ public class PrintHelperTest
         System.out.println(PrintHelper.printNeighborsOfReportPacket(packet));
     }
 
+    @Test
+    public void test_packet_logger(){
+        SdwnReportPacket packet = f.createReportPacket(1L, src, dst, null, n0, n1);
+        logger.log(packet);
+    }
 
 }
