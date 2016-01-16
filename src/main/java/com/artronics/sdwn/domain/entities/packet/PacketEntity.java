@@ -185,4 +185,10 @@ public class PacketEntity implements Packet, Serializable
         this.nextHop = nextHop;
     }
 
+    @Override
+    public String toString()
+    {
+        String s = String.format("ID: %-5d - src: %s -> dst: %s ",id,srcNode,dstNode);
+        return s;
+    }
 }

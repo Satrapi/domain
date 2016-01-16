@@ -11,6 +11,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
+import static com.artronics.sdwn.domain.entities.packet.Packet.Type.*;
+
 /**
  * It creates a fake SdwnPacket of all types The default convention for non-parameter methods is as
  * follow: src is always 30, dst is always 0, payload for data is from 0 to payload length and for
@@ -25,7 +27,7 @@ public class FakePacketFactory
 
     private List<Integer> createHeader()
     {
-        return createHeader(10, Packet.Type.DATA, 30, 0);
+        return createHeader(10, DATA, 30, 0);
     }
 
     private List<Integer> createHeader(int len, Packet.Type type, int src, int dst)
@@ -56,18 +58,9 @@ public class FakePacketFactory
     public SdwnReportPacket createReportPacket(Long packetId,SdwnNodeEntity src, SdwnNodeEntity dst,
                                                DeviceConnectionEntity device,
                                                Long... add){
+
         SdwnReportPacket packet = new SdwnReportPacket();
-        packet.setId(packetId);
-        packet.setType(Packet.Type.REPORT);
-
-        src.setDevice(device);
-        src.setId(src.getAddress());
-
-        dst.setDevice(device);
-        dst.setId(dst.getAddress());
-
-        packet.setSrcNode(src);
-        packet.setDstNode(dst);
+        setSrcDstNodes(src, dst, REPORT,packet,packetId,device);
 
         List<SdwnNeighbor> ns= new ArrayList<>();
         for (Long a:add){
@@ -77,6 +70,41 @@ public class FakePacketFactory
             ns.add(ni);
         }
         packet.setNeighbors(ns);
+
+        return packet;
+    }
+    public SdwnReportPacket createReportPacket(Long packetId,SdwnNodeEntity src, SdwnNodeEntity dst,
+                                               DeviceConnectionEntity device,
+                                               SdwnNodeEntity... nodes){
+
+        SdwnReportPacket packet = new SdwnReportPacket();
+        setSrcDstNodes(src, dst, REPORT,packet,packetId,device);
+
+        List<SdwnNeighbor> ns= new ArrayList<>();
+        for (SdwnNodeEntity node:nodes){
+            node.setDevice(device);
+            node.setId(node.getAddress());
+            SdwnNeighbor ni = new SdwnNeighbor(node,100D,100);
+            ns.add(ni);
+        }
+        packet.setNeighbors(ns);
+
+        return packet;
+    }
+
+    public PacketEntity setSrcDstNodes(SdwnNodeEntity src,SdwnNodeEntity dst, Packet.Type type,
+                                       PacketEntity packet,Long packetId,DeviceConnectionEntity device){
+        packet.setId(packetId);
+        packet.setType(type);
+
+        src.setDevice(device);
+        src.setId(src.getAddress());
+
+        dst.setDevice(device);
+        dst.setId(dst.getAddress());
+
+        packet.setSrcNode(src);
+        packet.setDstNode(dst);
 
         return packet;
     }
@@ -100,7 +128,7 @@ public class FakePacketFactory
                                                List<Integer> neighbors)
     {
         List<Integer> header = createHeader(Packet.HEADER_LEN + 3 + neighbors.size(),
-                                            Packet.Type.REPORT,
+                                            REPORT,
                                             src, dst);
 
         List<Integer> extra = new ArrayList<>();
@@ -155,7 +183,7 @@ public class FakePacketFactory
     public List<Integer> createRawDataPacket(int src, int dst, int payloadLen)
     {
         List<Integer> header = createHeader(Packet.HEADER_LEN + payloadLen,
-                                            Packet.Type.DATA, src, dst);
+                                            DATA, src, dst);
 
         List<Integer> packet = new ArrayList<>(header);
         for (int i = 0; i < payloadLen; i++) {
@@ -178,7 +206,7 @@ public class FakePacketFactory
     public List<Integer> createRawRuleRequestPacket(int src, int dst, int echoPayloadLen)
     {
         List<Integer> packet = createHeader(10 + echoPayloadLen,
-                                            Packet.Type.RL_REQ,
+                                            RL_REQ,
                                             src,
                                             dst);
         List<Integer> payload = new ArrayList<>();
@@ -195,7 +223,7 @@ public class FakePacketFactory
     public List<Integer> createRawOpenPathPacket(int src, int dst, List<Integer> path)
     {
         List<Integer> packet = createHeader(10 + path.size() * 2,
-                                            Packet.Type.OPN_PT,
+                                            OPN_PT,
                                             src,
                                             dst);
         List<Integer> payload = new ArrayList<>();

@@ -58,4 +58,12 @@ public class SdwnReportPacket extends PacketEntity
     {
         this.battery = battery;
     }
+
+    @Override
+    public String toString()
+    {
+        String s = "ReportPacket->"+super.toString();
+
+        return s;
+    }
 }
