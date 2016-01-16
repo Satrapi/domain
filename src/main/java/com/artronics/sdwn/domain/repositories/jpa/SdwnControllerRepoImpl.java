@@ -22,9 +22,10 @@ public class SdwnControllerRepoImpl implements SdwnControllerCustomRepo
     @Override
     public SdwnControllerEntity findByUrl(String url)
     {
-        Query q = em.createQuery("FROM com.artronics.sdwn.domain.entities.SdwnControllerEntity n where " +
-                                         "n.url=?1");
-        q.setParameter(1,url);
+        Query q = em.createQuery(
+                "FROM com.artronics.sdwn.domain.entities.SdwnControllerEntity n where " +
+                        "n.url=?1");
+        q.setParameter(1, url);
 
         SdwnControllerEntity singleResult = null;
         try {
