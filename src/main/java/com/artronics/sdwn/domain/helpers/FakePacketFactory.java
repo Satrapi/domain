@@ -1,6 +1,7 @@
 package com.artronics.sdwn.domain.helpers;
 
 
+import com.artronics.sdwn.domain.entities.DeviceConnectionEntity;
 import com.artronics.sdwn.domain.entities.node.SdwnNeighbor;
 import com.artronics.sdwn.domain.entities.node.SdwnNodeEntity;
 import com.artronics.sdwn.domain.entities.packet.*;
@@ -52,14 +53,28 @@ public class FakePacketFactory
         return PacketEntity.create(createRawReportPacket(),null);
     }
 
-    public SdwnReportPacket createReportPacket(SdwnNodeEntity src,SdwnNodeEntity dst, SdwnNodeEntity... neighbors){
+    public SdwnReportPacket createReportPacket(Long packetId,SdwnNodeEntity src, SdwnNodeEntity dst,
+                                               DeviceConnectionEntity device,
+                                               Long... add){
         SdwnReportPacket packet = new SdwnReportPacket();
+        packet.setId(packetId);
+        packet.setType(Packet.Type.REPORT);
+
+        src.setDevice(device);
+        src.setId(src.getAddress());
+
+        dst.setDevice(device);
+        dst.setId(dst.getAddress());
+
         packet.setSrcNode(src);
         packet.setDstNode(dst);
+
         List<SdwnNeighbor> ns= new ArrayList<>();
-        for (SdwnNodeEntity neighbor : neighbors) {
-            SdwnNeighbor n = new SdwnNeighbor(src,100D,100);
-            ns.add(n);
+        for (Long a:add){
+            SdwnNodeEntity n = new SdwnNodeEntity(a,device);
+            n.setId(a);
+            SdwnNeighbor ni = new SdwnNeighbor(n,100D,100);
+            ns.add(ni);
         }
         packet.setNeighbors(ns);
 
