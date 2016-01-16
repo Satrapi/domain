@@ -26,12 +26,12 @@ public class FakePacketFactory
 
     PacketFactory packetFactory = new SdwnPacketFactory();
 
-    private List<Integer> createHeader()
+    protected List<Integer> createHeader()
     {
         return createHeader(10, DATA, 30, 0);
     }
 
-    private List<Integer> createHeader(int len, Packet.Type type, int src, int dst)
+    protected List<Integer> createHeader(int len, Packet.Type type, int src, int dst)
     {
         Integer[] bytes = {
                 len,//length
