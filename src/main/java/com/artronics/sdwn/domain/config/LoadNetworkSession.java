@@ -7,9 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 
 @Configuration
-
 public class LoadNetworkSession
 {
     private final static Logger log = Logger.getLogger(LoadNetworkSession.class);
@@ -19,6 +19,7 @@ public class LoadNetworkSession
     private SessionManager sessionManager;
 
     @Bean(name = "networkSession")
+    @Primary
     public NetworkSession getNetworkSession(){
         NetworkSession s =sessionManager.open();
         return s;
