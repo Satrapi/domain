@@ -4,12 +4,11 @@ import com.artronics.sdwn.domain.config.PersistenceConfig;
 import com.artronics.sdwn.domain.config.SdwnDomainConfig;
 import com.artronics.sdwn.domain.repositories.NodeRepo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 
-@SpringBootApplication
+//@SpringBootApplication
 public class SdwnDomainApplication implements ApplicationListener<ContextRefreshedEvent>
 {
 	@Autowired
