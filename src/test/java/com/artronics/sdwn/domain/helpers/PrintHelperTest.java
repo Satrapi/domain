@@ -36,6 +36,13 @@ public class PrintHelperTest
 
         System.out.println(PrintHelper.printNeighborsOfReportPacket(packet));
     }
+    @Test
+    public void test_print_neighbors_withNull_id(){
+        SdwnReportPacket packet = f.createReportPacket(null, src, dst, null, n0, n1);
+
+        System.out.println(PrintHelper.printNeighborsOfReportPacket(packet));
+
+    }
 
     @Test
     public void test_packet_logger(){
