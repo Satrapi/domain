@@ -2,6 +2,7 @@ package com.artronics.sdwn.domain.entities.node;
 
 import com.artronics.sdwn.domain.entities.DeviceConnectionEntity;
 import com.artronics.sdwn.domain.entities.NetworkSession;
+import com.artronics.sdwn.domain.helpers.PrintHelper;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -21,11 +22,9 @@ public class SdwnNodeEntity implements Node,Serializable
 
     protected DeviceConnectionEntity device;
 
-//    protected List<SdwnNeighbor> neighbors=new ArrayList<>();
-
     //Normal as default value
     protected Type type = Type.NORMAL;
-    protected Status status = Status.IDLE;
+    protected Status status = Status.UNREGISTERED;
 
     protected Date created;
     protected Date updated;
@@ -106,23 +105,6 @@ public class SdwnNodeEntity implements Node,Serializable
         this.device = device;
     }
 
-//    @OneToMany(fetch = FetchType.EAGER,mappedBy = "srcNode",targetEntity = SdwnNeighbor.class)
-//    @Cascade(org.hibernate.annotations.CascadeType.PERSIST)
-//    public List<SdwnNeighbor> getNeighbors()
-//    {
-//        return neighbors;
-//    }
-//
-//    public void setNeighbors(
-//            List<SdwnNeighbor> neighbors)
-//    {
-//        this.neighbors = neighbors;
-//    }
-//
-//    public void addNeighbor(SdwnNeighbor neighbor){
-//        this.neighbors.add(neighbor);
-//    }
-
     @Enumerated(EnumType.STRING)
     @Column(name = "type", nullable = false)
     public Type getType()
@@ -187,6 +169,7 @@ public class SdwnNodeEntity implements Node,Serializable
 
     public enum Status
     {
+        UNREGISTERED,
         IDLE,
         ACTIVE,
         DISABLE, ISLAND,
@@ -226,8 +209,7 @@ public class SdwnNodeEntity implements Node,Serializable
     @Override
     public String toString()
     {
-        String node = this.getType() == Type.NORMAL ? "Node: " : "Sink: ";
-        return String.format(node + "%-5d", this.getAddress());
+        return PrintHelper.printLongNode(this);
     }
 
 }
